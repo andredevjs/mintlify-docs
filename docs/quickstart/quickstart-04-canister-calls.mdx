@@ -1,0 +1,535 @@
+---
+title: 'Step 4: Odin canister calls'
+description: 'Make Odin smart contract calls'
+---
+
+In this step, you'll learn how to use your Internet Computer identity from Step 3 to make canister calls.
+
+<Info>
+This step builds on [Step 3: Authenticate with Odin API](/quickstart/quickstart-03-login-odin). Make sure you have a working Internet Computer identity before proceeding.
+</Info>
+
+## What You'll Accomplish
+
+By the end of this step, you'll have:
+- ✅ Connected to the Odin canister using your authenticated identity
+- ✅ Made your first canister call to deposit BTC
+- ✅ Verified the functionality of your integration 
+
+## Odin Canister Integration
+
+### Import Canister Interface
+
+Let's start by setting up the Odin canister interface. You can reference the contract and download the interface from the [Internet Computer Dashboard](https://dashboard.internetcomputer.org/canister/z2vm5-gaaaa-aaaaj-azw6q-cai).
+
+<Tabs>
+<Tab title="IDL Factory">
+```typescript canister/odin_canister.idl.ts
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+export const idlFactory = ({ IDL }: { IDL: any }) => {
+  const TokenID = IDL.Text;
+  const TokenAmount = IDL.Nat;
+  const Time = IDL.Int;
+  const TradeType = IDL.Variant({ buy: IDL.Null, sell: IDL.Null });
+  const MetadataRecord = IDL.Tuple(
+    IDL.Text,
+    IDL.Variant({
+      hex: IDL.Text,
+      int: IDL.Int,
+      nat: IDL.Nat,
+      principal: IDL.Principal,
+      blob: IDL.Vec(IDL.Nat8),
+      bool: IDL.Bool,
+      nat8: IDL.Nat8,
+      text: IDL.Text,
+    })
+  );
+  const Metadata = IDL.Vec(MetadataRecord);
+  const OperationType = IDL.Variant({
+    access: IDL.Record({ user: IDL.Text }),
+    token: IDL.Record({
+      tokenid: TokenID,
+      deltas: IDL.Vec(
+        IDL.Record({
+          field: IDL.Text,
+          delta: IDL.Variant({
+            add: TokenAmount,
+            sub: TokenAmount,
+            bool: IDL.Bool,
+            text: IDL.Text,
+            amount: TokenAmount,
+          }),
+        })
+      ),
+    }),
+    trade: IDL.Record({
+      amount_token: TokenAmount,
+      tokenid: TokenID,
+      user: IDL.Text,
+      typeof: TradeType,
+      bonded: IDL.Bool,
+      amount_btc: TokenAmount,
+      price: TokenAmount,
+    }),
+    other: IDL.Record({ data: Metadata, name: IDL.Text }),
+    mint: IDL.Record({ tokenid: TokenID, data: Metadata }),
+    transaction: IDL.Record({
+      tokenid: TokenID,
+      balance: TokenAmount,
+      metadata: Metadata,
+      user: IDL.Text,
+      typeof: IDL.Variant({ add: IDL.Null, sub: IDL.Null }),
+      description: IDL.Text,
+      amount: TokenAmount,
+    }),
+  });
+  const Operation = IDL.Record({ time: Time, typeof: OperationType });
+  const OperationAndId = IDL.Record({
+    id: IDL.Nat,
+    operation: Operation,
+  });
+  const LiquiditySwap = IDL.Record({
+    btc: TokenAmount,
+    token: TokenAmount,
+  });
+  const LiquidityPool = IDL.Record({
+    locked: LiquiditySwap,
+    current: LiquiditySwap,
+  });
+  const Rune = IDL.Record({
+    id: IDL.Text,
+    ticker: IDL.Text,
+    name: IDL.Text,
+  });
+  const BondingCurveSettings = IDL.Record({
+    a: IDL.Float64,
+    b: IDL.Float64,
+    c: IDL.Float64,
+    name: IDL.Text,
+  });
+  const Token = IDL.Record({
+    creator: IDL.Principal,
+    lp_supply: TokenAmount,
+    bonded_btc: TokenAmount,
+    pool: LiquidityPool,
+    rune: IDL.Opt(Rune),
+    bonding_threshold_reward: TokenAmount,
+    supply: TokenAmount,
+    icrc_canister: IDL.Opt(IDL.Principal),
+    max_supply: TokenAmount,
+    bonding_curve: IDL.Opt(BondingCurveSettings),
+    bonding_threshold: TokenAmount,
+    bonding_threshold_fee: TokenAmount,
+  });
+  const LiquidityType = IDL.Variant({ add: IDL.Null, remove: IDL.Null });
+  const LiquidityRequest = IDL.Record({
+    tokenid: TokenID,
+    typeof: LiquidityType,
+    amount: TokenAmount,
+  });
+  const LiquidityResponse = IDL.Variant({ ok: IDL.Null, err: IDL.Text });
+  const ListRequest = IDL.Record({ rune_id: IDL.Text });
+  const ListResponse = IDL.Variant({ ok: TokenAmount, err: IDL.Text });
+  const MintRequest = IDL.Record({
+    metadata: Metadata,
+    code: IDL.Opt(IDL.Text),
+    prebuy_amount: IDL.Opt(TokenAmount),
+  });
+  const MintResponse = IDL.Variant({ ok: IDL.Null, err: IDL.Text });
+  const TradeSettings = IDL.Record({
+    slippage: IDL.Opt(IDL.Tuple(TokenAmount, IDL.Nat)),
+  });
+  const TradeAmount = IDL.Variant({
+    btc: TokenAmount,
+    token: TokenAmount,
+  });
+  const TradeRequest = IDL.Record({
+    tokenid: TokenID,
+    typeof: TradeType,
+    settings: IDL.Opt(TradeSettings),
+    amount: TradeAmount,
+  });
+  const TradeResponse = IDL.Variant({ ok: IDL.Null, err: IDL.Text });
+  const TransferRequest = IDL.Record({
+    to: IDL.Text,
+    tokenid: TokenID,
+    amount: TokenAmount,
+  });
+  const TransferResponse = IDL.Variant({ ok: IDL.Null, err: IDL.Text });
+  const WithdrawProtocol = IDL.Variant({
+    btc: IDL.Null,
+    ckbtc: IDL.Null,
+    volt: IDL.Null,
+  });
+  const WithdrawRequest = IDL.Record({
+    protocol: WithdrawProtocol,
+    tokenid: TokenID,
+    address: IDL.Text,
+    amount: TokenAmount,
+  });
+  const WithdrawResponse = IDL.Variant({ ok: IDL.Bool, err: IDL.Text });
+  return IDL.Service({
+    access_grant: IDL.Func([IDL.Text], [IDL.Bool], []),
+    add_fastbtc: IDL.Func([IDL.Principal, IDL.Nat], [], []),
+    admin_access_add: IDL.Func([IDL.Vec(IDL.Text), IDL.Text], [], []),
+    admin_discount_add: IDL.Func([IDL.Vec(IDL.Text), IDL.Text], [], []),
+    getBalance: IDL.Func([IDL.Text, TokenID], [TokenAmount], ['query']),
+    getOperation: IDL.Func([IDL.Nat], [IDL.Opt(Operation)], ['query']),
+    getOperations: IDL.Func([IDL.Nat, IDL.Nat], [IDL.Vec(OperationAndId)], ['query']),
+    getToken: IDL.Func([TokenID], [IDL.Opt(Token)], ['query']),
+    icrc10_supported_standards: IDL.Func(
+      [],
+      [IDL.Vec(IDL.Record({ url: IDL.Text, name: IDL.Text }))],
+      ['query']
+    ),
+    icrc28_trusted_origins: IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
+    token_deposit: IDL.Func([TokenID, TokenAmount], [TokenAmount], []),
+    token_liquidity: IDL.Func([LiquidityRequest], [LiquidityResponse], []),
+    token_list: IDL.Func([ListRequest], [ListResponse], []),
+    token_mint: IDL.Func([MintRequest], [MintResponse], []),
+    token_trade: IDL.Func([TradeRequest], [TradeResponse], []),
+    token_transfer: IDL.Func([TransferRequest], [TransferResponse], []),
+    token_withdraw: IDL.Func([WithdrawRequest], [WithdrawResponse], []),
+    user_claim: IDL.Func([], [TokenAmount], []),
+    voucher_claim: IDL.Func([IDL.Text], [IDL.Opt(TokenAmount)], []),
+  });
+};
+export const init = ({ IDL }: { IDL: any }) => {
+  return [];
+};
+
+```
+</Tab>
+
+<Tab title="TypeScript Types">
+```typescript canister/odin_canister.d.ts
+import type { ActorMethod } from '@dfinity/agent';
+import type { IDL } from '@dfinity/candid';
+import type { Principal } from '@dfinity/principal';
+
+export interface BondingCurveSettings {
+  a: number;
+  b: number;
+  c: number;
+  name: string;
+}
+export interface ListRequest {
+  rune_id: string;
+}
+export type ListResponse = { ok: TokenAmount } | { err: string };
+export interface LiquidityPool {
+  locked: LiquiditySwap;
+  current: LiquiditySwap;
+}
+export interface LiquidityRequest {
+  tokenid: TokenID;
+  typeof: LiquidityType;
+  amount: TokenAmount;
+}
+export type LiquidityResponse = { ok: null } | { err: string };
+export interface LiquiditySwap {
+  btc: TokenAmount;
+  token: TokenAmount;
+}
+export type LiquidityType = { add: null } | { remove: null };
+export type Metadata = Array<MetadataRecord>;
+export type MetadataRecord = [
+  string,
+  (
+    | { hex: string }
+    | { int: bigint }
+    | { nat: bigint }
+    | { principal: Principal }
+    | { blob: Uint8Array | number[] }
+    | { bool: boolean }
+    | { nat8: number }
+    | { text: string }
+  ),
+];
+export interface MintRequest {
+  metadata: Metadata;
+  code: [] | [string];
+  prebuy_amount: [] | [TokenAmount];
+}
+export type MintResponse = { ok: null } | { err: string };
+export interface Operation {
+  time: Time;
+  typeof: OperationType;
+}
+export interface OperationAndId {
+  id: bigint;
+  operation: Operation;
+}
+export type OperationType =
+  | { access: { user: string } }
+  | {
+      token: {
+        tokenid: TokenID;
+        deltas: Array<{
+          field: string;
+          delta:
+            | { add: TokenAmount }
+            | { sub: TokenAmount }
+            | { bool: boolean }
+            | { text: string }
+            | { amount: TokenAmount };
+        }>;
+      };
+    }
+  | {
+      trade: {
+        amount_token: TokenAmount;
+        tokenid: TokenID;
+        user: string;
+        typeof: TradeType;
+        bonded: boolean;
+        amount_btc: TokenAmount;
+        price: TokenAmount;
+      };
+    }
+  | { other: { data: Metadata; name: string } }
+  | { mint: { tokenid: TokenID; data: Metadata } }
+  | {
+      transaction: {
+        tokenid: TokenID;
+        balance: TokenAmount;
+        metadata: Metadata;
+        user: string;
+        typeof: { add: null } | { sub: null };
+        description: string;
+        amount: TokenAmount;
+      };
+    };
+export interface Rune {
+  id: string;
+  ticker: string;
+  name: string;
+}
+export type Time = bigint;
+export interface Token {
+  creator: Principal;
+  lp_supply: TokenAmount;
+  bonded_btc: TokenAmount;
+  pool: LiquidityPool;
+  rune: [] | [Rune];
+  bonding_threshold_reward: TokenAmount;
+  supply: TokenAmount;
+  icrc_canister: [] | [Principal];
+  max_supply: TokenAmount;
+  bonding_curve: [] | [BondingCurveSettings];
+  bonding_threshold: TokenAmount;
+  bonding_threshold_fee: TokenAmount;
+}
+export type TokenAmount = bigint;
+export type TokenID = string;
+export type TradeAmount = { btc: TokenAmount } | { token: TokenAmount };
+export interface TradeRequest {
+  tokenid: TokenID;
+  typeof: TradeType;
+  settings: [] | [TradeSettings];
+  amount: TradeAmount;
+}
+export type TradeResponse = { ok: null } | { err: string };
+export interface TradeSettings {
+  slippage: [] | [[TokenAmount, bigint]];
+}
+export type TradeType = { buy: null } | { sell: null };
+export interface TransferRequest {
+  to: string;
+  tokenid: TokenID;
+  amount: TokenAmount;
+}
+export type TransferResponse = { ok: null } | { err: string };
+export type WithdrawProtocol = { btc: null } | { ckbtc: null } | { volt: null };
+export interface WithdrawRequest {
+  protocol: WithdrawProtocol;
+  tokenid: TokenID;
+  address: string;
+  amount: TokenAmount;
+}
+export type WithdrawResponse = { ok: boolean } | { err: string };
+export interface _ODIN_SERVICE {
+  access_grant: ActorMethod<[string], boolean>;
+  add_fastbtc: ActorMethod<[Principal, bigint], undefined>;
+  admin_access_add: ActorMethod<[Array<string>, string], undefined>;
+  admin_discount_add: ActorMethod<[Array<string>, string], undefined>;
+  getBalance: ActorMethod<[string, TokenID], TokenAmount>;
+  getOperation: ActorMethod<[bigint], [] | [Operation]>;
+  getOperations: ActorMethod<[bigint, bigint], Array<OperationAndId>>;
+  getToken: ActorMethod<[TokenID], [] | [Token]>;
+  icrc10_supported_standards: ActorMethod<[], Array<{ url: string; name: string }>>;
+  icrc28_trusted_origins: ActorMethod<[], Array<string>>;
+  token_deposit: ActorMethod<[TokenID, TokenAmount], TokenAmount>;
+  token_liquidity: ActorMethod<[LiquidityRequest], LiquidityResponse>;
+  token_list: ActorMethod<[ListRequest], ListResponse>;
+  token_mint: ActorMethod<[MintRequest], MintResponse>;
+  token_trade: ActorMethod<[TradeRequest], TradeResponse>;
+  token_transfer: ActorMethod<[TransferRequest], TransferResponse>;
+  token_withdraw: ActorMethod<[WithdrawRequest], WithdrawResponse>;
+  user_claim: ActorMethod<[], TokenAmount>;
+  voucher_claim: ActorMethod<[string], [] | [TokenAmount]>;
+}
+export declare const idlFactory: IDL.InterfaceFactory;
+export declare const init: (args: { IDL: typeof IDL }) => IDL.Type[];
+
+```
+</Tab>
+
+</Tabs>
+
+
+## Configuration Setup
+
+Create the necessary configuration files for your project:
+
+<CodeGroup>
+```typescript constants/canister.ts
+...
+
+// Odin Trading Canister IDs by environment
+export const ODIN_CANISTER_IDS = {
+  development: 'w5cxm-6iaaa-aaaaj-az4jq-cai',
+  staging: 'z2vm5-gaaaa-aaaaj-azw6q-cai',
+  production: 'z2vm5-gaaaa-aaaaj-azw6q-cai',
+} as const;
+
+// Default canister ID (can be overridden by environment)
+export const ODIN_CANISTER_ID = process.env.ODIN_CANISTER_ID || ODIN_CANISTER_IDS.development;
+```
+
+```typescript types/odin.ts
+/**
+ * Result of a successful deposit operation
+ */
+export interface DepositResult {
+  /** New balance after deposit */
+  newBalance: bigint;
+}
+
+/**
+ * Odin Actor Interface
+ */
+export interface OdinActor {
+  /** Deposit tokens to the canister */
+  token_deposit(tokenId: string, amount: bigint): Promise<DepositResult>;
+}
+```
+</CodeGroup>
+
+## Environment Configuration
+
+<Tabs>
+<Tab title="Development">
+```typescript
+const ODIN_CANISTER_ID = 'w5cxm-6iaaa-aaaaj-az4jq-cai';
+```
+Use this endpoint for development and testing purposes. Doesn't require BTC
+</Tab>
+
+<Tab title="Production">
+```typescript
+const ODIN_CANISTER_ID = 'z2vm5-gaaaa-aaaaj-azw6q-cai';
+```
+Switch to this endpoint when deploying to production.
+</Tab>
+</Tabs>
+
+## Deposit BTC
+
+<Note>This is only for development and testing purposes. This method is not exposed in production. For onchain deposits, use the corresponding deposit address of the coin/token/rune.</Note>
+
+To interact with any canister method, we just need to create an actor based on that identity.
+
+```typescript utils/odin.ts
+import { Actor, HttpAgent } from "@dfinity/agent";
+import { DelegationIdentity } from "@dfinity/identity";
+import { OdinActor } from "../types/odin";
+import { DEFAULT_IC_HOST, ODIN_CANISTER_ID } from "../constants/canister";
+import { idlFactory as OdinIdlFactory } from '../canister/odin_canister.idl';
+
+export const getActor = (identity: DelegationIdentity): OdinActor => {
+    // Step 1: Create an authenticated actor with the identity
+     const agent = new HttpAgent({ identity, host: DEFAULT_IC_HOST });
+     const odinActor = Actor.createActor(OdinIdlFactory, {
+       agent,
+       canisterId: ODIN_CANISTER_ID,
+     }) as OdinActor;
+
+     return odinActor;
+}
+```
+
+## Testing the Deposit Function
+
+Let's test our identity by calling a function in the Odin canister:
+
+```typescript index.ts
+import { login, prepare } from './core/prepare';
+import { createSampleWallet } from './sample-wallet';
+import { authenticateCallback } from './core/auth-callback';
+import { getActor } from './utils/odin';
+
+
+(async () => {
+  const wallet = await createSampleWallet();
+  const result = await prepare(wallet.address);
+
+  const signature = await wallet.signMessage(result.message);
+
+  const identity = await login({
+    address: wallet.address,
+    message: result.message,
+    signature: signature,
+    publicKey: wallet.publicKey,
+    signatureType: 'Bip322Simple',
+  });
+
+  // Used for API calls.
+  const token = await authenticateCallback(identity);
+
+  const odin = getActor(identity);
+
+  const BITCOIN = {
+    id: 'btc',
+    name: 'Bitcoin',
+    ticker: 'BTC',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg',
+    rune: null,
+    divisibility: 8,
+    decimals: 3,
+  };
+
+  const btc = 0.0001; 
+  const amount = BigInt(btc * 10 ** (BITCOIN.divisibility + BITCOIN.decimals));
+  const newBalance  = await odin.token_deposit(BITCOIN.id, amount);
+
+  console.log({
+    newBalance,
+  });
+})();
+
+
+```
+
+Run the test:
+
+```bash
+npx tsx index.ts
+```
+
+<ResponseExample>
+```js Expected Output
+{ newBalance: 10000000n }
+```
+</ResponseExample>
+
+<Check>
+Great! You've successfully integrated with Odin!
+</Check>
+
+
+<Card title="View canister documentation" icon="arrow-right" href="/canister/welcome">
+  Learn more about the canister smart contract
+</Card>
+

@@ -1,0 +1,7672 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/tokens": {
+      "get": {
+        "operationId": "TokensController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "env",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "production",
+                "staging",
+                "development"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "marketcap:asc",
+                "marketcap:desc",
+                "price:asc",
+                "price:desc",
+                "holder_count:asc",
+                "holder_count:desc",
+                "created_time:asc",
+                "created_time:desc",
+                "name:asc",
+                "name:desc",
+                "last_comment_time:asc",
+                "last_comment_time:desc",
+                "comment_count:asc",
+                "comment_count:desc",
+                "volume:asc",
+                "volume:desc",
+                "sold:asc",
+                "sold:desc",
+                "txn_count:asc",
+                "txn_count:desc",
+                "btc_liquidity:asc",
+                "btc_liquidity:desc",
+                "swap_fees:asc",
+                "swap_fees:desc",
+                "swap_fees_24:asc",
+                "swap_fees_24:desc",
+                "swap_volume:asc",
+                "swap_volume:desc",
+                "swap_volume_24:asc",
+                "swap_volume_24:desc",
+                "last_action_time:asc",
+                "last_action_time:desc",
+                "price_delta_5m:asc",
+                "price_delta_5m:desc",
+                "price_delta_1h:asc",
+                "price_delta_1h:desc",
+                "price_delta_6h:asc",
+                "price_delta_6h:desc",
+                "price_delta_1d:asc",
+                "price_delta_1d:desc",
+                "ascension:asc",
+                "ascension:desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "bonded",
+            "required": false,
+            "in": "query",
+            "description": "Filter by bonded status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "featured",
+            "required": false,
+            "in": "query",
+            "description": "Filter by featured status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "etched",
+            "required": false,
+            "in": "query",
+            "description": "Filter by etched status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "price_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum price",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum price",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "volume_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum volume",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "volume_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum volume",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "holders_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum number of holders",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "holders_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum number of holders",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "comment_count_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum comment count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "comment_count_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum comment count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sold_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum sold count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sold_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum sold count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "marketcap_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum market cap",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "marketcap_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum market cap",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "buy_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "buy_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sell_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sell_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "tx_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "tx_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "has_twitter",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_telegram",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_website",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Does text search for fields: id, name, description, rune, creator, telegram, website, twitter, ticker",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id_in",
+            "required": false,
+            "in": "query",
+            "description": "Filter by IDs",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "id_not_in",
+            "required": false,
+            "in": "query",
+            "description": "Filter by IDs",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "creator",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "favorite",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "twitter_verified",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "verified",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "include_tags",
+            "required": false,
+            "in": "query",
+            "description": "Include tokens with these tags (comma-separated)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exclude_tags",
+            "required": false,
+            "in": "query",
+            "description": "Exclude tokens with these tags (comma-separated)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type_in",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                "internal",
+                "token",
+                "currency"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "ascended",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TokenEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}": {
+      "get": {
+        "operationId": "TokenController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}/comments": {
+      "get": {
+        "operationId": "TokenController_getComments",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "user",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "pinned",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "community",
+            "required": false,
+            "in": "query",
+            "description": "Filter for community comments (0 for regular, 1 for community)",
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/CommentEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}/community-comments": {
+      "get": {
+        "operationId": "TokenController_getCommunityComments",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "user",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "pinned",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "community",
+            "required": false,
+            "in": "query",
+            "description": "Filter for community comments (0 for regular, 1 for community)",
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/CommentEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}/comment": {
+      "post": {
+        "operationId": "TokenController_postComment",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTokenCommentBodyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}/owners": {
+      "get": {
+        "operationId": "TokenController_getOwners",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "balance:asc",
+                "balance:desc",
+                "holding_value:asc",
+                "holding_value:desc",
+                "btc_first:asc",
+                "btc_first:desc"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/LedgerEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}/liquidity": {
+      "get": {
+        "operationId": "TokenController_getLiquidity",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "balance:asc",
+                "balance:desc",
+                "holding_value:asc",
+                "holding_value:desc",
+                "btc_first:asc",
+                "btc_first:desc"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/LedgerEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}/trades": {
+      "get": {
+        "operationId": "TokenController_getTrades",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "token",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount_btc_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "amount_btc_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "amount_token_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "amount_token_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "bonded",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "id:asc",
+                "id:desc",
+                "amount_token:asc",
+                "amount_token:desc",
+                "amount_btc:asc",
+                "amount_btc:desc",
+                "time:asc",
+                "time:desc",
+                "price:asc",
+                "price:desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TradeEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}/feed": {
+      "get": {
+        "operationId": "TokenController_getFeed",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resolution",
+            "required": false,
+            "in": "query",
+            "description": "The resolution of the feed in seconds ( defaults to 1 day )",
+            "schema": {
+              "example": 1440,
+              "type": "number"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "description": "UNIX date_from",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "description": "UNIX date_to",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TokenFeedEntity"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}/tv_feed": {
+      "get": {
+        "operationId": "TokenController_getTradingViewFeed",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resolution",
+            "required": false,
+            "in": "query",
+            "description": "The resolution of the feed in minutes ( defaults to 1 hour )",
+            "schema": {
+              "example": 60,
+              "type": "number"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "description": "JS Date String ( ISO String or UNIX time )",
+            "schema": {
+              "example": "2025-07-16T18:37:16.613Z",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "description": "JS Date String ( ISO String or UNIX time )",
+            "schema": {
+              "example": "1752691036613",
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "order by time of the bars ( defaults to asc for TradingView )",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "last",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TokenFeedEntity"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}/image": {
+      "get": {
+        "operationId": "TokenController_getImage",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "content": {
+              "image/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "Image stream"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{id}/favorite": {
+      "post": {
+        "operationId": "TokenController_addToFavorites",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenFavoriteEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens",
+          "User Token Favorites"
+        ]
+      },
+      "delete": {
+        "operationId": "TokenController_removeFromFavorites",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenFavoriteEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens",
+          "User Token Favorites"
+        ]
+      }
+    },
+    "/token/{id}/twitter/verify": {
+      "get": {
+        "operationId": "TokenController_verifyTwitterHandle",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "redirect_uri",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "token": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/TokenEntity"
+                            },
+                            "other_tokens": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/TokenEntity"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens"
+        ]
+      }
+    },
+    "/token/{token}/comment/{comment}/pin": {
+      "post": {
+        "operationId": "TokenController_pinComment",
+        "parameters": [
+          {
+            "name": "token",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "comment",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/CommentEntity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens",
+          "Token Comment Pin"
+        ]
+      }
+    },
+    "/token/{token}/comment/{comment}/unpin": {
+      "post": {
+        "operationId": "TokenController_unpinComment",
+        "parameters": [
+          {
+            "name": "token",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "comment",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/CommentEntity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens",
+          "Token Comment Pin"
+        ]
+      }
+    },
+    "/token/{tokenId}/comment/{id}/{action}": {
+      "post": {
+        "operationId": "TokenController_upvote",
+        "parameters": [
+          {
+            "name": "tokenId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "name": "action",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentUpvoteEntityResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens",
+          "Token Comment Upvote"
+        ]
+      }
+    },
+    "/token/{tokenId}/comment/{id}/upvote": {
+      "delete": {
+        "operationId": "TokenController_removeUpvote",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentUpvoteEntityResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tokens",
+          "Token Comment Upvote"
+        ]
+      }
+    },
+    "/tags": {
+      "get": {
+        "operationId": "TagsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns all tags",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TagEntity"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all tags",
+        "tags": [
+          "Tags"
+        ]
+      },
+      "post": {
+        "operationId": "TagsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTagDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The tag has been successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/TagEntity"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Tag with this name already exists"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new tag",
+        "tags": [
+          "Tags"
+        ]
+      }
+    },
+    "/tags/{id}": {
+      "get": {
+        "operationId": "TagsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Tag ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the tag",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/TagEntity"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tag not found"
+          }
+        },
+        "summary": "Get a tag by ID",
+        "tags": [
+          "Tags"
+        ]
+      },
+      "patch": {
+        "operationId": "TagsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Tag ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTagDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tag has been successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/TagEntity"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tag not found"
+          },
+          "409": {
+            "description": "Tag with this name already exists"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update a tag",
+        "tags": [
+          "Tags"
+        ]
+      },
+      "delete": {
+        "operationId": "TagsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Tag ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The tag has been successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/TagEntity"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tag not found"
+          },
+          "409": {
+            "description": "Cannot delete tag that is in use"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete a tag",
+        "tags": [
+          "Tags"
+        ]
+      }
+    },
+    "/token/{id}/tags": {
+      "get": {
+        "operationId": "TokenTagsController_getTokenTags",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Token ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all tags for the token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TagEntity"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Token not found"
+          }
+        },
+        "summary": "Get all tags for a token",
+        "tags": [
+          "Token Tags"
+        ]
+      }
+    },
+    "/token/{id}/tag/{tagId}": {
+      "post": {
+        "operationId": "TokenTagsController_addTagToToken",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Token ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tagId",
+            "required": true,
+            "in": "path",
+            "description": "Tag ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The tag has been successfully added to the token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Token or tag not found"
+          },
+          "409": {
+            "description": "Tag is already applied to this token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Add a tag to a token",
+        "tags": [
+          "Token Tags"
+        ]
+      },
+      "delete": {
+        "operationId": "TokenTagsController_removeTagFromToken",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Token ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tagId",
+            "required": true,
+            "in": "path",
+            "description": "Tag ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The tag has been successfully removed from the token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Token or tag not found or tag is not applied to this token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Remove a tag from a token",
+        "tags": [
+          "Token Tags"
+        ]
+      }
+    },
+    "/trades": {
+      "get": {
+        "operationId": "TradesController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "token",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount_btc_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "amount_btc_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "amount_token_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "amount_token_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "bonded",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "id:asc",
+                "id:desc",
+                "amount_token:asc",
+                "amount_token:desc",
+                "amount_btc:asc",
+                "amount_btc:desc",
+                "time:asc",
+                "time:desc",
+                "price:asc",
+                "price:desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TradeEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/trade/{id}": {
+      "get": {
+        "operationId": "TradeController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/btc/balance/{address}": {
+      "get": {
+        "operationId": "BTCController_getBtcBalance",
+        "parameters": [
+          {
+            "name": "address",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "balance": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "BTC",
+          "BTC"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "operationId": "UsersController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "username",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "created_at:asc",
+                "created_at:desc"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/UserEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}": {
+      "get": {
+        "operationId": "UserController_findOne",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/tokens": {
+      "get": {
+        "operationId": "UserController_getOwned",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "env",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "production",
+                "staging",
+                "development"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "bonded",
+            "required": false,
+            "in": "query",
+            "description": "Filter by bonded status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "featured",
+            "required": false,
+            "in": "query",
+            "description": "Filter by featured status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "etched",
+            "required": false,
+            "in": "query",
+            "description": "Filter by etched status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "price_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum price",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum price",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "volume_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum volume",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "volume_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum volume",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "holders_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum number of holders",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "holders_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum number of holders",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "comment_count_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum comment count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "comment_count_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum comment count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sold_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum sold count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sold_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum sold count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "marketcap_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum market cap",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "marketcap_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum market cap",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "buy_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "buy_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sell_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sell_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "tx_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "tx_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "has_twitter",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_telegram",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_website",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Does text search for fields: id, name, description, rune, creator, telegram, website, twitter, ticker",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id_in",
+            "required": false,
+            "in": "query",
+            "description": "Filter by IDs",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "id_not_in",
+            "required": false,
+            "in": "query",
+            "description": "Filter by IDs",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "creator",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "favorite",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "twitter_verified",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "verified",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "include_tags",
+            "required": false,
+            "in": "query",
+            "description": "Include tokens with these tags (comma-separated)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exclude_tags",
+            "required": false,
+            "in": "query",
+            "description": "Exclude tokens with these tags (comma-separated)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type_in",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                "internal",
+                "token",
+                "currency"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "ascended",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "marketcap:asc",
+                "marketcap:desc",
+                "price:asc",
+                "price:desc",
+                "holder_count:asc",
+                "holder_count:desc",
+                "created_time:asc",
+                "created_time:desc",
+                "name:asc",
+                "name:desc",
+                "last_comment_time:asc",
+                "last_comment_time:desc",
+                "comment_count:asc",
+                "comment_count:desc",
+                "volume:asc",
+                "volume:desc",
+                "sold:asc",
+                "sold:desc",
+                "txn_count:asc",
+                "txn_count:desc",
+                "btc_liquidity:asc",
+                "btc_liquidity:desc",
+                "swap_fees:asc",
+                "swap_fees:desc",
+                "swap_fees_24:asc",
+                "swap_fees_24:desc",
+                "swap_volume:asc",
+                "swap_volume:desc",
+                "swap_volume_24:asc",
+                "swap_volume_24:desc",
+                "last_action_time:asc",
+                "last_action_time:desc",
+                "price_delta_5m:asc",
+                "price_delta_5m:desc",
+                "price_delta_1h:asc",
+                "price_delta_1h:desc",
+                "price_delta_6h:asc",
+                "price_delta_6h:desc",
+                "price_delta_1d:asc",
+                "price_delta_1d:desc",
+                "ascension:asc",
+                "ascension:desc",
+                "balance:asc",
+                "balance:desc",
+                "holding_value:asc",
+                "holding_value:desc",
+                "btc_first:asc",
+                "btc_first:desc"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TokenAndBalanceEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Get user tokens"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/liquidity": {
+      "get": {
+        "operationId": "UserController_getOwnedLiquidity",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "env",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "production",
+                "staging",
+                "development"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "bonded",
+            "required": false,
+            "in": "query",
+            "description": "Filter by bonded status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "featured",
+            "required": false,
+            "in": "query",
+            "description": "Filter by featured status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "etched",
+            "required": false,
+            "in": "query",
+            "description": "Filter by etched status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "price_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum price",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum price",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "volume_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum volume",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "volume_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum volume",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "holders_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum number of holders",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "holders_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum number of holders",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "comment_count_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum comment count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "comment_count_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum comment count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sold_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum sold count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sold_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum sold count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "marketcap_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum market cap",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "marketcap_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum market cap",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "buy_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "buy_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sell_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sell_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "tx_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "tx_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "has_twitter",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_telegram",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_website",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Does text search for fields: id, name, description, rune, creator, telegram, website, twitter, ticker",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id_in",
+            "required": false,
+            "in": "query",
+            "description": "Filter by IDs",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "id_not_in",
+            "required": false,
+            "in": "query",
+            "description": "Filter by IDs",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "creator",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "favorite",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "twitter_verified",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "verified",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "include_tags",
+            "required": false,
+            "in": "query",
+            "description": "Include tokens with these tags (comma-separated)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exclude_tags",
+            "required": false,
+            "in": "query",
+            "description": "Exclude tokens with these tags (comma-separated)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type_in",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                "internal",
+                "token",
+                "currency"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "ascended",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "marketcap:asc",
+                "marketcap:desc",
+                "price:asc",
+                "price:desc",
+                "holder_count:asc",
+                "holder_count:desc",
+                "created_time:asc",
+                "created_time:desc",
+                "name:asc",
+                "name:desc",
+                "last_comment_time:asc",
+                "last_comment_time:desc",
+                "comment_count:asc",
+                "comment_count:desc",
+                "volume:asc",
+                "volume:desc",
+                "sold:asc",
+                "sold:desc",
+                "txn_count:asc",
+                "txn_count:desc",
+                "btc_liquidity:asc",
+                "btc_liquidity:desc",
+                "swap_fees:asc",
+                "swap_fees:desc",
+                "swap_fees_24:asc",
+                "swap_fees_24:desc",
+                "swap_volume:asc",
+                "swap_volume:desc",
+                "swap_volume_24:asc",
+                "swap_volume_24:desc",
+                "last_action_time:asc",
+                "last_action_time:desc",
+                "price_delta_5m:asc",
+                "price_delta_5m:desc",
+                "price_delta_1h:asc",
+                "price_delta_1h:desc",
+                "price_delta_6h:asc",
+                "price_delta_6h:desc",
+                "price_delta_1d:asc",
+                "price_delta_1d:desc",
+                "ascension:asc",
+                "ascension:desc",
+                "balance:asc",
+                "balance:desc",
+                "holding_value:asc",
+                "holding_value:desc",
+                "btc_first:asc",
+                "btc_first:desc"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TokenAndBalanceEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/created": {
+      "get": {
+        "operationId": "UserController_getTokens",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "env",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "production",
+                "staging",
+                "development"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "marketcap:asc",
+                "marketcap:desc",
+                "price:asc",
+                "price:desc",
+                "holder_count:asc",
+                "holder_count:desc",
+                "created_time:asc",
+                "created_time:desc",
+                "name:asc",
+                "name:desc",
+                "last_comment_time:asc",
+                "last_comment_time:desc",
+                "comment_count:asc",
+                "comment_count:desc",
+                "volume:asc",
+                "volume:desc",
+                "sold:asc",
+                "sold:desc",
+                "txn_count:asc",
+                "txn_count:desc",
+                "btc_liquidity:asc",
+                "btc_liquidity:desc",
+                "swap_fees:asc",
+                "swap_fees:desc",
+                "swap_fees_24:asc",
+                "swap_fees_24:desc",
+                "swap_volume:asc",
+                "swap_volume:desc",
+                "swap_volume_24:asc",
+                "swap_volume_24:desc",
+                "last_action_time:asc",
+                "last_action_time:desc",
+                "price_delta_5m:asc",
+                "price_delta_5m:desc",
+                "price_delta_1h:asc",
+                "price_delta_1h:desc",
+                "price_delta_6h:asc",
+                "price_delta_6h:desc",
+                "price_delta_1d:asc",
+                "price_delta_1d:desc",
+                "ascension:asc",
+                "ascension:desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "bonded",
+            "required": false,
+            "in": "query",
+            "description": "Filter by bonded status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "featured",
+            "required": false,
+            "in": "query",
+            "description": "Filter by featured status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "etched",
+            "required": false,
+            "in": "query",
+            "description": "Filter by etched status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "price_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum price",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum price",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "volume_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum volume",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "volume_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum volume",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "holders_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum number of holders",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "holders_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum number of holders",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "comment_count_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum comment count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "comment_count_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum comment count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sold_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum sold count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sold_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum sold count",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "marketcap_max",
+            "required": false,
+            "in": "query",
+            "description": "Maximum market cap",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "marketcap_min",
+            "required": false,
+            "in": "query",
+            "description": "Minimum market cap",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "buy_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "buy_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sell_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sell_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "tx_count_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "tx_count_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "has_twitter",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_telegram",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_website",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Does text search for fields: id, name, description, rune, creator, telegram, website, twitter, ticker",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id_in",
+            "required": false,
+            "in": "query",
+            "description": "Filter by IDs",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "id_not_in",
+            "required": false,
+            "in": "query",
+            "description": "Filter by IDs",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "creator",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "favorite",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "twitter_verified",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "verified",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "include_tags",
+            "required": false,
+            "in": "query",
+            "description": "Include tokens with these tags (comma-separated)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exclude_tags",
+            "required": false,
+            "in": "query",
+            "description": "Exclude tokens with these tags (comma-separated)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type_in",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                "internal",
+                "token",
+                "currency"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "ascended",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TokenEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Get user created tokens"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/balances": {
+      "get": {
+        "operationId": "UserController_getBalances",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "balance:asc",
+                "balance:desc",
+                "holding_value:asc",
+                "holding_value:desc",
+                "btc_first:asc",
+                "btc_first:desc"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/UserBalanceEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/profile": {
+      "post": {
+        "operationId": "UserController_upsertProfile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertProfileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/username": {
+      "post": {
+        "operationId": "UserController_updateUsername",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUsernameDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/image": {
+      "post": {
+        "operationId": "UserController_upsertImage",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadProfileImageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{btcaddress}/utxo": {
+      "get": {
+        "operationId": "UserController_getUtxo",
+        "parameters": [
+          {
+            "name": "btcaddress",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NowNodesUtxoEntity"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/runes": {
+      "get": {
+        "operationId": "UserController_hiroGet",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedHiroRune"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/HiroRuneEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{id}/image": {
+      "get": {
+        "operationId": "UserController_getImage",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "content": {
+              "image/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "Image stream"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/pending/deposit": {
+      "get": {
+        "operationId": "UserController_deposit",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "txid": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "type": "number"
+                          },
+                          "status": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/pending/withdraw": {
+      "get": {
+        "operationId": "UserController_withdraw",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/activity": {
+      "get": {
+        "operationId": "UserController_activity",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "user",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "buy",
+                "sell",
+                "add",
+                "remove",
+                "withdraw",
+                "deposit",
+                "transfer",
+                "create",
+                "send",
+                "receive"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "action_in",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "buy",
+                  "sell",
+                  "add",
+                  "remove",
+                  "withdraw",
+                  "deposit",
+                  "transfer",
+                  "create",
+                  "send",
+                  "receive"
+                ]
+              }
+            }
+          },
+          {
+            "name": "time_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount_btc_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount_btc_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount_token_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount_token_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "time:asc",
+                "time:desc",
+                "amount_btc:asc",
+                "amount_btc:desc",
+                "amount_token:asc",
+                "amount_token:desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/UserActivityEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/achievements": {
+      "get": {
+        "operationId": "UserController_getAchievements",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UserAchievementResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/achievement/{achievementId}/claim": {
+      "post": {
+        "operationId": "UserController_claimAchievements",
+        "parameters": [
+          {
+            "name": "achievementId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/stats": {
+      "get": {
+        "operationId": "UserController_stats",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total_asset_value": {
+                          "type": "number"
+                        },
+                        "total_liquidity": {
+                          "type": "number"
+                        },
+                        "btc": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "description": "User Stats"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/user/{principal}/token/favorites": {
+      "get": {
+        "operationId": "UserController_getTokenFavorites",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TokenFavoriteEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users",
+          "User Token Favorites"
+        ]
+      }
+    },
+    "/user/{principal}/referral_earnings_stats": {
+      "get": {
+        "operationId": "UserController_getReferralEarnings",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "string"
+                        },
+                        "earnings": {
+                          "type": "number"
+                        },
+                        "trades": {
+                          "type": "number"
+                        },
+                        "users": {
+                          "type": "number"
+                        },
+                        "volume": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users",
+          "User Referral Earnings"
+        ]
+      }
+    },
+    "/user/{principal}/referral_earnings": {
+      "get": {
+        "operationId": "UserController_getReferralEarningsHistory",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "user",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ReferralEarningEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users",
+          "User Referral Earnings"
+        ]
+      }
+    },
+    "/user/{principal}/token/{token}/realized_pnl": {
+      "get": {
+        "operationId": "UserController_getUserRealizedPnl",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "User Realized PnL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/UserRealizedPnlEntity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users",
+          "User PnL"
+        ]
+      }
+    },
+    "/user/{principal}/token/{token}/unrealized_pnl": {
+      "get": {
+        "operationId": "UserController_getUserUnrealizedPnl",
+        "parameters": [
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "User Realized PnL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/UserUnrealizedPnlEntity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users",
+          "User PnL"
+        ]
+      }
+    },
+    "/user/{principal}/transactions": {
+      "get": {
+        "operationId": "UserController_getUserTransactions",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "token",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "index_time:asc",
+                "index_time:desc",
+                "created_time:asc",
+                "created_time:desc",
+                "index_time:asc",
+                "index_time:desc",
+                "amount:asc",
+                "amount:desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "index_time_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "index_time_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "created_time_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "created_time_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updated_time_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updated_time_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TransactionAndTokenEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users",
+          "User Transactions"
+        ]
+      }
+    },
+    "/settings": {
+      "get": {
+        "operationId": "SettingsController_getSettings",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SettingEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      }
+    },
+    "/transactions": {
+      "get": {
+        "operationId": "TransactionsController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "user",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "index_time:asc",
+                "index_time:desc",
+                "created_time:asc",
+                "created_time:desc",
+                "index_time:asc",
+                "index_time:desc",
+                "amount:asc",
+                "amount:desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "index_time_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "index_time_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "created_time_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "created_time_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updated_time_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updated_time_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Transactions"
+        ]
+      }
+    },
+    "/transaction/{id}": {
+      "get": {
+        "operationId": "TransactionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Transaction"
+        ]
+      }
+    },
+    "/balance/{token}/{principal}": {
+      "get": {
+        "operationId": "BalanceController_getPrincipalTokenBalance",
+        "parameters": [
+          {
+            "name": "token",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "principal",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Balance will be a number if it exists, otherwise null",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "balance": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Balance"
+        ]
+      }
+    },
+    "/auth": {
+      "post": {
+        "operationId": "AuthController_authenticate",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthJwtResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      },
+      "get": {
+        "operationId": "AuthController_checkAuth",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "Returns the principal of the authenticated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "operationId": "AuthController_refreshAuth",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthJwtResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/upload/{filename}": {
+      "get": {
+        "operationId": "UploadController_getFile",
+        "parameters": [
+          {
+            "name": "filename",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "content": {
+              "image/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "Image stream"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "Upload"
+        ]
+      }
+    },
+    "/upload": {
+      "post": {
+        "operationId": "UploadController_upload",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "upload": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Upload"
+        ]
+      }
+    },
+    "/currency/{symbol}": {
+      "get": {
+        "operationId": "CurrencyController_getCurrency",
+        "parameters": [
+          {
+            "name": "symbol",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datetime",
+            "required": false,
+            "in": "query",
+            "description": "Gets currency that is less than or equal to this datetime",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Currency"
+        ]
+      }
+    },
+    "/blife/sync": {
+      "post": {
+        "operationId": "BlifeController_sync",
+        "parameters": [],
+        "responses": {
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "BLIFE account has not minted an ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Response if BTC Wallet syncs with BLIFE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sucess": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Blife"
+        ]
+      }
+    },
+    "/stripe/session": {
+      "post": {
+        "operationId": "StripeController_createSession",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StripeCreateSessionResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "Stripe"
+        ]
+      }
+    },
+    "/snapshot/token/{id}/share": {
+      "post": {
+        "operationId": "SnapshotController_createTokenShareSnapshot",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "show_balance",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTokenShareSnapshotDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SnapshotEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Snapshots"
+        ]
+      }
+    },
+    "/snapshot/token/{id}/pnl": {
+      "post": {
+        "operationId": "SnapshotController_createTokenPnlSnapshot",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "format",
+            "required": false,
+            "in": "path",
+            "description": "Format of the Snapshot",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "percent",
+                "amount"
+              ],
+              "default": "percent"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SnapshotEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Snapshots"
+        ]
+      }
+    },
+    "/snapshot/{id}/save": {
+      "post": {
+        "operationId": "SnapshotController_saveSnapshot",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SnapshotEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Snapshots"
+        ]
+      }
+    },
+    "/snapshot/{id}/image": {
+      "get": {
+        "operationId": "SnapshotController_getImage",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "content": {
+              "image/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "Image stream"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "Snapshots"
+        ]
+      }
+    },
+    "/activity/{id}": {
+      "get": {
+        "operationId": "ActivityController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Activities"
+        ]
+      }
+    },
+    "/activities": {
+      "get": {
+        "operationId": "ActivitiesController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "user",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "buy",
+                "sell",
+                "add",
+                "remove",
+                "withdraw",
+                "deposit",
+                "transfer",
+                "create",
+                "send",
+                "receive"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "action_in",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "buy",
+                  "sell",
+                  "add",
+                  "remove",
+                  "withdraw",
+                  "deposit",
+                  "transfer",
+                  "create",
+                  "send",
+                  "receive"
+                ]
+              }
+            }
+          },
+          {
+            "name": "time_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount_btc_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount_btc_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount_token_max",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount_token_min",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "enum": [
+                null,
+                "time:asc",
+                "time:desc",
+                "amount_btc:asc",
+                "amount_btc:desc",
+                "amount_token:asc",
+                "amount_token:desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Paginated"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/UserActivityEntity"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Activities"
+        ]
+      }
+    },
+    "/search": {
+      "get": {
+        "operationId": "SearchController_findAll",
+        "parameters": [
+          {
+            "name": "q",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "types",
+            "required": false,
+            "in": "query",
+            "description": "Possible values: trade, activity, user, token",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SearchEntity"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Search"
+        ]
+      }
+    },
+    "/statistics/dashboard": {
+      "get": {
+        "operationId": "StatisticsController_getDashboard",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/rune/{rune_name}": {
+      "get": {
+        "operationId": "RunesController_getByRuneName",
+        "parameters": [
+          {
+            "name": "rune_name",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RuneResponseEntity"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Runes"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Odin API",
+    "description": "The Odin API documentation",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "Paginated": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "count": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "limit": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "data",
+          "count",
+          "page",
+          "limit"
+        ]
+      },
+      "LedgerEntity": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "balance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "user_username": {
+            "type": "string"
+          },
+          "user_image": {
+            "type": "string"
+          },
+          "tokenid": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "user",
+          "token",
+          "balance",
+          "user_username",
+          "user_image",
+          "tokenid"
+        ]
+      },
+      "TagEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "created_time"
+        ]
+      },
+      "Function": {
+        "type": "object",
+        "properties": {}
+      },
+      "TokenEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string"
+          },
+          "volume": {
+            "type": "number"
+          },
+          "bonded": {
+            "type": "boolean"
+          },
+          "icrc_ledger": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "marketcap": {
+            "type": "number"
+          },
+          "rune": {
+            "type": "string"
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "holder_count": {
+            "type": "number"
+          },
+          "comment_count": {
+            "type": "number"
+          },
+          "sold": {
+            "type": "number"
+          },
+          "twitter": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "telegram": {
+            "type": "string"
+          },
+          "last_comment_time": {
+            "type": "string"
+          },
+          "rel_ledgers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LedgerEntity"
+            }
+          },
+          "buy_count": {
+            "type": "number"
+          },
+          "sell_count": {
+            "type": "number"
+          },
+          "ticker": {
+            "type": "string"
+          },
+          "btc_liquidity": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "user_btc_liquidity": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "user_token_liquidity": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "user_lp_tokens": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "token_liquidity": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "total_supply": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "swap_fees": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "swap_volume": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "swap_fees_24": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "threshold": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "swap_volume_24": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "holder_dev": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "holder_top": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "txn_count": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "decimals": {
+            "type": "number"
+          },
+          "deposits": {
+            "type": "boolean"
+          },
+          "divisibility": {
+            "type": "number"
+          },
+          "external": {
+            "type": "boolean"
+          },
+          "trading": {
+            "type": "boolean"
+          },
+          "withdrawals": {
+            "type": "boolean"
+          },
+          "last_action_time": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "price_5m": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "price_1h": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "price_6h": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "price_1d": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "rune_id": {
+            "type": "string"
+          },
+          "twitter_verified": {
+            "type": "boolean"
+          },
+          "rel_tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagEntity"
+            }
+          },
+          "tags": {
+            "$ref": "#/components/schemas/Function"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "liquidity_threshold": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "progress": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "created_time",
+          "volume",
+          "bonded",
+          "price",
+          "marketcap",
+          "featured",
+          "holder_count",
+          "comment_count",
+          "sold",
+          "rel_ledgers",
+          "buy_count",
+          "sell_count",
+          "ticker",
+          "btc_liquidity",
+          "user_btc_liquidity",
+          "user_token_liquidity",
+          "user_lp_tokens",
+          "token_liquidity",
+          "total_supply",
+          "swap_fees",
+          "swap_volume",
+          "swap_fees_24",
+          "threshold",
+          "swap_volume_24",
+          "holder_dev",
+          "holder_top",
+          "txn_count",
+          "decimals",
+          "deposits",
+          "divisibility",
+          "external",
+          "trading",
+          "withdrawals",
+          "last_action_time",
+          "price_5m",
+          "price_1h",
+          "price_6h",
+          "price_1d",
+          "rune_id",
+          "twitter_verified",
+          "rel_tags",
+          "tags",
+          "verified",
+          "liquidity_threshold",
+          "progress"
+        ]
+      },
+      "CommentVoteEntity": {
+        "type": "object",
+        "properties": {
+          "upvotes": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "downvotes": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "upvotes",
+          "downvotes",
+          "total"
+        ]
+      },
+      "CommentEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "user": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "message": {
+            "type": "string"
+          },
+          "reported": {
+            "type": "boolean",
+            "default": false
+          },
+          "blocked": {
+            "type": "boolean",
+            "default": false
+          },
+          "image": {
+            "type": "string"
+          },
+          "pinned": {
+            "type": "boolean"
+          },
+          "pinned_time": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "community": {
+            "type": "integer",
+            "default": 0,
+            "description": "If 1, comment is in the community section requiring token ownership"
+          },
+          "user_username": {
+            "type": "string"
+          },
+          "user_image": {
+            "type": "string"
+          },
+          "vote": {
+            "$ref": "#/components/schemas/CommentVoteEntity"
+          },
+          "user_upvote": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "user",
+          "token",
+          "time",
+          "message",
+          "reported",
+          "blocked",
+          "pinned",
+          "pinned_time",
+          "community",
+          "vote",
+          "user_upvote"
+        ]
+      },
+      "CreateTokenCommentBodyDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "community": {
+            "type": "integer",
+            "default": 0,
+            "description": "If 1, comment is in the community section requiring token ownership"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "TradeEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "buy": {
+            "type": "boolean"
+          },
+          "amount_btc": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "amount_token": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "price": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "bonded": {
+            "type": "boolean"
+          },
+          "user_username": {
+            "type": "string"
+          },
+          "user_image": {
+            "type": "string"
+          },
+          "decimals": {
+            "$ref": "#/components/schemas/Function"
+          },
+          "divisibility": {
+            "$ref": "#/components/schemas/Function"
+          }
+        },
+        "required": [
+          "id",
+          "user",
+          "token",
+          "time",
+          "buy",
+          "amount_btc",
+          "amount_token",
+          "price",
+          "bonded",
+          "user_username",
+          "user_image",
+          "decimals",
+          "divisibility"
+        ]
+      },
+      "TokenFeedEntity": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "open": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "high": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "low": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "close": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "volume": {
+            "type": "number",
+            "format": "decimal"
+          }
+        },
+        "required": [
+          "time",
+          "open",
+          "high",
+          "low",
+          "close",
+          "volume"
+        ]
+      },
+      "TokenFavoriteEntity": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "date_created": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user",
+          "token",
+          "date_created"
+        ]
+      },
+      "CommentUpvoteEntity": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "comment": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "time": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "vote": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "user",
+          "comment",
+          "time",
+          "vote"
+        ]
+      },
+      "CommentUpvoteEntityResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/CommentUpvoteEntity"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "CreateTagDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Tag name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Tag description"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateTagDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Tag name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Tag description"
+          }
+        }
+      },
+      "OmitTypeClass": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "community": {
+            "type": "integer",
+            "default": 0,
+            "description": "If 1, comment is in the community section requiring token ownership"
+          }
+        },
+        "required": [
+          "user",
+          "token",
+          "time",
+          "message"
+        ]
+      },
+      "UserEntity": {
+        "type": "object",
+        "properties": {
+          "principal": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "referrer": {
+            "type": "string"
+          },
+          "admin": {
+            "type": "boolean"
+          },
+          "ref_code": {
+            "type": "string"
+          },
+          "profit": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "total_asset_value": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "referral_count": {
+            "type": "number"
+          },
+          "referral_earnings": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "access_allowed": {
+            "type": "boolean"
+          },
+          "beta_access_codes": {
+            "type": "string"
+          },
+          "btc_deposit_address": {
+            "type": "string"
+          },
+          "blife_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "btc_wallet_address": {
+            "type": "string"
+          },
+          "rune_deposit_address": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "principal",
+          "username",
+          "admin",
+          "ref_code",
+          "profit",
+          "total_asset_value",
+          "referral_count",
+          "referral_earnings",
+          "access_allowed",
+          "beta_access_codes",
+          "btc_deposit_address",
+          "blife_id",
+          "created_at",
+          "btc_wallet_address",
+          "rune_deposit_address"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary"
+          },
+          "referrer": {
+            "type": "string"
+          },
+          "ref_code": {
+            "type": "string"
+          }
+        }
+      },
+      "TokenAndBalanceEntity": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "$ref": "#/components/schemas/TokenEntity"
+          },
+          "balance": {
+            "type": "number",
+            "format": "decimal"
+          }
+        },
+        "required": [
+          "token",
+          "balance"
+        ]
+      },
+      "UserBalanceEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "ticker": {
+            "type": "string"
+          },
+          "rune": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "divisibility": {
+            "type": "number"
+          },
+          "decimals": {
+            "type": "number"
+          },
+          "trading": {
+            "type": "boolean"
+          },
+          "deposits": {
+            "type": "boolean"
+          },
+          "withdrawals": {
+            "type": "boolean"
+          },
+          "rune_id": {
+            "type": "string"
+          },
+          "balance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "ticker",
+          "rune",
+          "name",
+          "image",
+          "divisibility",
+          "decimals",
+          "trading",
+          "deposits",
+          "withdrawals",
+          "rune_id",
+          "balance",
+          "type"
+        ]
+      },
+      "UpsertProfileDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateUsernameDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "username"
+        ]
+      },
+      "UploadProfileImageDto": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "required": [
+          "image"
+        ]
+      },
+      "NowNodesUtxoEntity": {
+        "type": "object",
+        "properties": {
+          "txid": {
+            "type": "string"
+          },
+          "vout": {
+            "type": "number"
+          },
+          "value": {
+            "type": "string"
+          },
+          "height": {
+            "type": "number"
+          },
+          "confirmations": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "txid",
+          "vout",
+          "value",
+          "height",
+          "confirmations"
+        ]
+      },
+      "PaginatedHiroRune": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "limit": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "limit"
+        ]
+      },
+      "HiroRune": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "spaced_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "spaced_name"
+        ]
+      },
+      "HiroRuneEntity": {
+        "type": "object",
+        "properties": {
+          "rune": {
+            "$ref": "#/components/schemas/HiroRune"
+          },
+          "balance": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "rune",
+          "balance",
+          "address"
+        ]
+      },
+      "ActivityAction": {
+        "type": "number",
+        "enum": []
+      },
+      "UserActivityTokenEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "ticker": {
+            "type": "string"
+          },
+          "rune": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "divisibility": {
+            "type": "number"
+          },
+          "decimals": {
+            "type": "number"
+          },
+          "trading": {
+            "type": "boolean"
+          },
+          "deposits": {
+            "type": "boolean"
+          },
+          "withdrawals": {
+            "type": "boolean"
+          },
+          "rune_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "ticker",
+          "rune",
+          "name",
+          "image",
+          "divisibility",
+          "decimals",
+          "trading",
+          "deposits",
+          "withdrawals",
+          "rune_id"
+        ]
+      },
+      "UserActivityEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "time": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "action": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ActivityAction"
+              }
+            ]
+          },
+          "amount_token": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "amount_btc": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "description": {
+            "$ref": "#/components/schemas/Function"
+          },
+          "token": {
+            "$ref": "#/components/schemas/UserActivityTokenEntity"
+          },
+          "rel_token": {
+            "$ref": "#/components/schemas/TokenEntity"
+          }
+        },
+        "required": [
+          "time",
+          "action",
+          "amount_token",
+          "amount_btc",
+          "description"
+        ]
+      },
+      "UserAchievementResponseAchievement": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "number"
+          },
+          "category_order": {
+            "type": "number"
+          },
+          "default": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "prereq_active": {
+            "example": [
+              0,
+              1,
+              3
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "prereq_display": {
+            "example": [
+              0,
+              1,
+              3
+            ],
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "id": {
+            "type": "number"
+          },
+          "status": {
+            "type": "number"
+          },
+          "status_text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "category",
+          "category_order",
+          "default",
+          "description",
+          "image",
+          "name",
+          "prereq_active",
+          "prereq_display",
+          "id",
+          "status",
+          "status_text"
+        ]
+      },
+      "UserAchievementResponse": {
+        "type": "object",
+        "properties": {
+          "category_id": {
+            "type": "number"
+          },
+          "category_name": {
+            "type": "string"
+          },
+          "achievements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAchievementResponseAchievement"
+            }
+          }
+        },
+        "required": [
+          "category_id",
+          "category_name",
+          "achievements"
+        ]
+      },
+      "ReferralEarningEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "user": {
+            "type": "string"
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "trades": {
+            "type": "number"
+          },
+          "users": {
+            "type": "number"
+          },
+          "volume": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "earnings": {
+            "type": "number",
+            "format": "decimal"
+          }
+        },
+        "required": [
+          "id",
+          "user",
+          "date",
+          "trades",
+          "users",
+          "volume",
+          "earnings"
+        ]
+      },
+      "Object": {
+        "type": "object",
+        "properties": {}
+      },
+      "UserRealizedPnlEntity": {
+        "type": "object",
+        "properties": {
+          "realized_quantity": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "avg_price_delta": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "realized_pnl": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "display_realized_quantity": {
+            "type": "number"
+          },
+          "display_avg_price_delta": {
+            "type": "number"
+          },
+          "display_realized_pnl": {
+            "type": "number"
+          },
+          "avg_sell_price": {
+            "type": "number"
+          },
+          "avg_buy_price": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "realized_quantity",
+          "avg_price_delta",
+          "realized_pnl",
+          "display_realized_quantity",
+          "display_avg_price_delta",
+          "display_realized_pnl",
+          "avg_sell_price",
+          "avg_buy_price"
+        ]
+      },
+      "UserUnrealizedPnlEntity": {
+        "type": "object",
+        "properties": {
+          "unrealized_quantity": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "avg_buy_price": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "unrealized_pnl": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "display_unrealized_quantity": {
+            "type": "number"
+          },
+          "display_avg_buy_price": {
+            "type": "number"
+          },
+          "display_unrealized_pnl": {
+            "type": "number"
+          },
+          "token_price": {
+            "type": "number"
+          },
+          "display_token_price": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "unrealized_quantity",
+          "avg_buy_price",
+          "unrealized_pnl",
+          "display_unrealized_quantity",
+          "display_avg_buy_price",
+          "display_unrealized_pnl",
+          "token_price",
+          "display_token_price"
+        ]
+      },
+      "TransactionEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "token": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "address": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "index_time": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "created_time": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updated_time": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "canister": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "amount",
+          "token",
+          "status",
+          "address",
+          "user",
+          "index_time",
+          "created_time",
+          "updated_time",
+          "canister"
+        ]
+      },
+      "SlimTokenEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "ticker": {
+            "type": "string"
+          },
+          "rune": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "divisibility": {
+            "type": "number"
+          },
+          "decimals": {
+            "type": "number"
+          },
+          "trading": {
+            "type": "boolean"
+          },
+          "deposits": {
+            "type": "boolean"
+          },
+          "withdrawals": {
+            "type": "boolean"
+          },
+          "rune_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "ticker",
+          "rune",
+          "name",
+          "image",
+          "divisibility",
+          "decimals",
+          "trading",
+          "deposits",
+          "withdrawals",
+          "rune_id"
+        ]
+      },
+      "TransactionAndTokenEntity": {
+        "type": "object",
+        "properties": {
+          "transaction": {
+            "$ref": "#/components/schemas/TransactionEntity"
+          },
+          "token": {
+            "$ref": "#/components/schemas/SlimTokenEntity"
+          }
+        },
+        "required": [
+          "transaction",
+          "token"
+        ]
+      },
+      "SettingEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "access_required": {
+            "type": "boolean"
+          },
+          "bond_platform_fee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "bond_referral_reward": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "bond_reward": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "mint_fee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "swap_lp_fee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "swap_platform_fee": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "swap_referral_reward": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "last_ckbtc_block": {
+            "type": "number"
+          },
+          "last_indexed_block": {
+            "type": "number"
+          },
+          "community_comments_threshold": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "public_comments_threshold": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "access_required",
+          "bond_platform_fee",
+          "bond_referral_reward",
+          "bond_reward",
+          "mint_fee",
+          "swap_lp_fee",
+          "swap_platform_fee",
+          "swap_referral_reward",
+          "last_ckbtc_block",
+          "last_indexed_block",
+          "community_comments_threshold",
+          "public_comments_threshold"
+        ]
+      },
+      "EventEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "user",
+          "time",
+          "token",
+          "metadata"
+        ]
+      },
+      "AuthenticateDto": {
+        "type": "object",
+        "properties": {
+          "publickey": {
+            "type": "string"
+          },
+          "delegation": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "signature": {
+            "type": "string"
+          },
+          "referrer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "timestamp",
+          "signature"
+        ]
+      },
+      "AuthJwtResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "CurrencyEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "datetime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "amount",
+          "datetime",
+          "symbol"
+        ]
+      },
+      "StripeCreateSessionResponse_TransactionDetails_WalletAddress": {
+        "type": "object",
+        "properties": {
+          "avalanche": {
+            "type": "null",
+            "nullable": true
+          },
+          "base_network": {
+            "type": "null",
+            "nullable": true
+          },
+          "bitcoin": {
+            "type": "string"
+          },
+          "destination_tags": {
+            "type": "null",
+            "nullable": true
+          },
+          "ethereum": {
+            "type": "null",
+            "nullable": true
+          },
+          "polygon": {
+            "type": "null",
+            "nullable": true
+          },
+          "solana": {
+            "type": "null",
+            "nullable": true
+          },
+          "stellar": {
+            "type": "null",
+            "nullable": true
+          }
+        },
+        "required": [
+          "avalanche",
+          "base_network",
+          "bitcoin",
+          "destination_tags",
+          "ethereum",
+          "polygon",
+          "solana",
+          "stellar"
+        ]
+      },
+      "StripeCreateSessionResponse_TransactionDetails": {
+        "type": "object",
+        "properties": {
+          "destination_amount": {
+            "type": "null",
+            "nullable": true
+          },
+          "destination_currencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "destination_currency": {
+            "type": "string"
+          },
+          "destination_network": {
+            "type": "string"
+          },
+          "destination_networks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fees": {
+            "type": "null",
+            "nullable": true
+          },
+          "lock_wallet_address": {
+            "type": "boolean"
+          },
+          "source_amount": {
+            "type": "null",
+            "nullable": true
+          },
+          "source_currency": {
+            "type": "null",
+            "nullable": true
+          },
+          "transaction_id": {
+            "type": "null",
+            "nullable": true
+          },
+          "wallet_address": {
+            "type": "null",
+            "nullable": true
+          },
+          "wallet_addresses": {
+            "$ref": "#/components/schemas/StripeCreateSessionResponse_TransactionDetails_WalletAddress"
+          }
+        },
+        "required": [
+          "destination_amount",
+          "destination_currencies",
+          "destination_currency",
+          "destination_network",
+          "destination_networks",
+          "fees",
+          "lock_wallet_address",
+          "source_amount",
+          "source_currency",
+          "transaction_id",
+          "wallet_address",
+          "wallet_addresses"
+        ]
+      },
+      "StripeCreateSessionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          },
+          "created": {
+            "type": "number"
+          },
+          "kyc_details_provided": {
+            "type": "boolean"
+          },
+          "livemode": {
+            "type": "boolean"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "redirect_url": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "transaction_details": {
+            "$ref": "#/components/schemas/StripeCreateSessionResponse_TransactionDetails"
+          }
+        },
+        "required": [
+          "id",
+          "object",
+          "client_secret",
+          "created",
+          "kyc_details_provided",
+          "livemode",
+          "metadata",
+          "redirect_url",
+          "status",
+          "transaction_details"
+        ]
+      },
+      "CreateTokenShareSnapshotDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "show_balance": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "message",
+          "show_balance"
+        ]
+      },
+      "LabelValue": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "value"
+        ]
+      },
+      "CreateSnapshotImageDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "main_value": {
+            "type": "string"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LabelValue"
+            }
+          }
+        },
+        "required": [
+          "token",
+          "color",
+          "main_value",
+          "values"
+        ]
+      },
+      "SnapshotEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "time": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CreateSnapshotImageDto"
+          }
+        },
+        "required": [
+          "id",
+          "image",
+          "time",
+          "user",
+          "token",
+          "data"
+        ]
+      },
+      "SearchEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "label"
+        ]
+      },
+      "OmnityResponseEntity": {
+        "type": "object",
+        "properties": {
+          "decimals": {
+            "type": "number"
+          },
+          "token_id": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "rune_id": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "symbol": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "decimals",
+          "token_id",
+          "icon",
+          "name",
+          "rune_id",
+          "symbol"
+        ]
+      },
+      "BisRuneTotalSaleInfo": {
+        "type": "object",
+        "properties": {
+          "sale_count": {
+            "type": "number"
+          },
+          "sale_count_3h": {
+            "type": "number"
+          },
+          "sale_count_6h": {
+            "type": "number"
+          },
+          "sale_count_9h": {
+            "type": "number"
+          },
+          "sale_count_12h": {
+            "type": "number"
+          },
+          "sale_count_1d": {
+            "type": "number"
+          },
+          "sale_count_3d": {
+            "type": "number"
+          },
+          "sale_count_7d": {
+            "type": "number"
+          },
+          "sale_count_30d": {
+            "type": "number"
+          },
+          "sale_amount": {
+            "type": "number"
+          },
+          "vol_3h": {
+            "type": "number"
+          },
+          "vol_6h": {
+            "type": "number"
+          },
+          "vol_9h": {
+            "type": "number"
+          },
+          "vol_12h": {
+            "type": "number"
+          },
+          "vol_1d": {
+            "type": "number"
+          },
+          "vol_3d": {
+            "type": "number"
+          },
+          "vol_7d": {
+            "type": "number"
+          },
+          "vol_30d": {
+            "type": "number"
+          },
+          "vol_total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "sale_count",
+          "sale_count_3h",
+          "sale_count_6h",
+          "sale_count_9h",
+          "sale_count_12h",
+          "sale_count_1d",
+          "sale_count_3d",
+          "sale_count_7d",
+          "sale_count_30d",
+          "sale_amount",
+          "vol_3h",
+          "vol_6h",
+          "vol_9h",
+          "vol_12h",
+          "vol_1d",
+          "vol_3d",
+          "vol_7d",
+          "vol_30d",
+          "vol_total"
+        ]
+      },
+      "BisRuneEntity": {
+        "type": "object",
+        "properties": {
+          "rune_id": {
+            "type": "string"
+          },
+          "rune_number": {
+            "type": "string"
+          },
+          "rune_name": {
+            "type": "string"
+          },
+          "spaced_rune_name": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "decimals": {
+            "type": "number"
+          },
+          "per_mint_amount": {
+            "type": "string"
+          },
+          "mint_cnt": {
+            "type": "string"
+          },
+          "mint_cnt_limit": {
+            "type": "string"
+          },
+          "premined_supply": {
+            "type": "string"
+          },
+          "total_minted_supply": {
+            "type": "string"
+          },
+          "burned_supply": {
+            "type": "string"
+          },
+          "circulating_supply": {
+            "type": "string"
+          },
+          "mint_progress": {
+            "type": "number"
+          },
+          "mint_start_block": {
+            "type": "number"
+          },
+          "mint_end_block": {
+            "type": "number"
+          },
+          "genesis_block": {
+            "type": "number"
+          },
+          "deploy_ts": {
+            "type": "string"
+          },
+          "deploy_txid": {
+            "type": "string"
+          },
+          "auto_upgrade": {
+            "type": "boolean"
+          },
+          "holder_count": {
+            "type": "number"
+          },
+          "event_count": {
+            "type": "number"
+          },
+          "mintable": {
+            "type": "boolean"
+          },
+          "icon_inscr_id": {
+            "type": "string"
+          },
+          "icon_delegate_id": {
+            "type": "string"
+          },
+          "icon_content_url": {
+            "type": "string"
+          },
+          "icon_render_url": {
+            "type": "string"
+          },
+          "avg_unit_price_in_sats": {
+            "type": "number"
+          },
+          "min_listed_unit_price_in_sats": {
+            "type": "number"
+          },
+          "min_listed_unit_price_unisat": {
+            "type": "number"
+          },
+          "listed_supply": {
+            "type": "string"
+          },
+          "listed_supply_ratio": {
+            "type": "number"
+          },
+          "marketcap": {
+            "type": "number"
+          },
+          "total_sale_info": {
+            "$ref": "#/components/schemas/BisRuneTotalSaleInfo"
+          }
+        },
+        "required": [
+          "rune_id",
+          "rune_number",
+          "rune_name",
+          "spaced_rune_name",
+          "symbol",
+          "decimals",
+          "per_mint_amount",
+          "mint_cnt",
+          "mint_cnt_limit",
+          "premined_supply",
+          "total_minted_supply",
+          "burned_supply",
+          "circulating_supply",
+          "mint_progress",
+          "mint_start_block",
+          "mint_end_block",
+          "genesis_block",
+          "deploy_ts",
+          "deploy_txid",
+          "auto_upgrade",
+          "holder_count",
+          "event_count",
+          "mintable",
+          "icon_inscr_id",
+          "icon_delegate_id",
+          "icon_content_url",
+          "icon_render_url",
+          "avg_unit_price_in_sats",
+          "min_listed_unit_price_in_sats",
+          "min_listed_unit_price_unisat",
+          "listed_supply",
+          "listed_supply_ratio",
+          "marketcap",
+          "total_sale_info"
+        ]
+      },
+      "RuneResponseEntity": {
+        "type": "object",
+        "properties": {
+          "omnity": {
+            "$ref": "#/components/schemas/OmnityResponseEntity"
+          },
+          "bestinslot": {
+            "$ref": "#/components/schemas/BisRuneEntity"
+          }
+        },
+        "required": [
+          "omnity",
+          "bestinslot"
+        ]
+      }
+    }
+  }
+}

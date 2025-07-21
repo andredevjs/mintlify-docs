@@ -1,0 +1,305 @@
+---
+title: 'Step 3: Authenticate with Odin API'
+description: 'Exchange your Internet Computer identity for an Odin API token'
+---
+
+In this step, you'll learn how to use your Internet Computer identity from Step 2 to authenticate with Odin's API services and receive a JWT token.
+
+<Info>
+This step builds on [Step 2: Complete SIWB Authentication](/quickstart/quickstart-02-siwb-login). Make sure you have a working Internet Computer identity before proceeding.
+</Info>
+
+## What You'll Accomplish
+
+By the end of this step, you'll have:
+- ✅ Implemented the Odin API authentication callback
+- ✅ Exchanged your Internet Computer identity for a JWT token
+- ✅ Tested the complete authentication flow from Bitcoin wallet to API access
+- ✅ Retrieved your user principal and delegation information
+
+## Overview: From Identity to API Access
+
+Once you have successfully created your Internet Computer identity through SIWB, the next step is to authenticate with Odin's API services. This involves:
+
+1. **Signing a timestamp** with your identity to prove ownership
+2. **Sending authentication data** to Odin's API endpoint
+3. **Receiving a JWT token** for authenticated API access
+
+## API Authentication Implementation
+
+Let's implement the function that handles authentication with Odin's API:
+
+```typescript core/auth-callback.ts
+import { DelegationIdentity, Ed25519KeyIdentity } from "@dfinity/identity";
+
+const ODIN_API_URL = 'https://api.odin.fun/dev'; // https://api.odin.fun/v1 for prod
+  /**
+   * Helper function to check if identity is a DelegationIdentity
+   */
+  const isDelegationIdentity = (
+    identity: DelegationIdentity | Ed25519KeyIdentity
+  ): identity is DelegationIdentity => {
+    return 'getDelegation' in identity;
+  }
+
+/**
+   * Exchange delegation identity for JWT token via API
+   * Based on authenticateCallback from siwbapi.ts
+   */
+export const authenticateCallback = async (
+    identity: DelegationIdentity | Ed25519KeyIdentity
+  ): Promise<string> => {
+    if (!identity) {
+      throw new Error('No Identity provided for authentication');
+    }
+
+    // Step 1: Sign timestamp with identity
+    const timestamp = Date.now().toString();
+    const signatureBuffer = await identity.sign(
+      new TextEncoder().encode(timestamp) as unknown as ArrayBuffer
+    );
+    const publicKey = Buffer.from(identity.getPublicKey().toDer()).toString('base64');
+
+    // Step 2: Create payload - match siwbapi.ts structure exactly
+    const payload: any = {
+      timestamp,
+      signature: Buffer.from(signatureBuffer).toString('base64'),
+    };
+
+    // Add delegation for DelegationIdentity, publickey for Ed25519KeyIdentity
+    if (isDelegationIdentity(identity)) {
+      payload.delegation = JSON.stringify(identity.getDelegation().toJSON());
+    } else {
+      payload.publickey = publicKey;
+    }
+
+    // Step 3:  API endpoint
+    const endpoint = `${ODIN_API_URL}/auth`;
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => 'Unable to read error response');
+      throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText}`);
+    }
+
+    const contentType = response.headers.get('content-type');
+    if (!contentType?.includes('application/json')) {
+      throw new Error(`Expected JSON response, got: ${contentType}`);
+    }
+
+    const authResponse = await response.json();
+
+    return authResponse.token;
+  }
+  ```
+
+## Understanding the Authentication Process
+
+The `authenticateCallback` function performs several key operations:
+
+<Steps>
+<Step title="Identity Validation">
+  Verifies that a valid identity was provided and determines its type (DelegationIdentity vs Ed25519KeyIdentity)
+</Step>
+
+<Step title="Timestamp Signing">
+  Creates a current timestamp and signs it with the identity to prove ownership
+</Step>
+
+<Step title="Payload Construction">
+  Builds the authentication payload with the appropriate data format for each identity type
+</Step>
+
+<Step title="API Request">
+  Sends the authentication data to Odin's API endpoint and handles the response
+</Step>
+
+<Step title="Token Extraction">
+  Extracts and returns the JWT token from the API response
+</Step>
+</Steps>
+
+<Note>
+The function handles both DelegationIdentity (from SIWB) and Ed25519KeyIdentity (direct key-based) authentication methods, making it flexible for different use cases.
+</Note>
+
+## Environment Configuration
+
+<Tabs>
+<Tab title="Development">
+```typescript
+const ODIN_API_URL = 'https://api.odin.fun/dev';
+```
+Use this endpoint for development and testing purposes.
+</Tab>
+
+<Tab title="Production">
+```typescript
+const ODIN_API_URL = 'https://api.odin.fun/v1';
+```
+Switch to this endpoint when deploying to production.
+</Tab>
+</Tabs>
+
+## Testing the Complete Authentication Flow
+
+Now let's test the entire authentication flow from Bitcoin wallet to API token:
+
+```typescript index.ts
+import { login, prepare } from "./core/prepare";
+import { createSampleWallet } from "./sample-wallet";
+import { authenticateCallback } from "./core/auth-callback";
+
+(async () => {
+
+    const wallet = await createSampleWallet();
+    const result = await prepare(wallet.address);
+
+    const signature = await wallet.signMessage(result.message);
+
+    const identity = await login({
+        address: wallet.address,
+        message: result.message,
+        signature: signature,
+        publicKey: wallet.publicKey,
+        signatureType: 'Bip322Simple',
+    });
+
+    const token = await authenticateCallback(identity);
+
+    console.log({
+        token: token,
+        principal: identity.getPrincipal().toString(),
+        identity: identity.getDelegation().toJSON(),
+    })
+})();
+```
+
+Run the complete test:
+
+```bash
+npx tsx index.ts
+```
+
+<ResponseExample>
+```js Expected Output
+{
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNmxqZnAtaGg1NHAtNGl0NGgtajQ3NDItNWZwdjQteXQ3YXEtdGh1Y3MtY2l0d3ctNzRmbGItdGRzanAtN2FlIiwiaWF0IjoxNzUzMTI3NjE1LCJleHAiOjE3NTMyMTQwMTV9._Bo6J_AIsvrYIo3k1tb1veWf2meiDWq1zH_cVY0vLe0',
+  principal: '6ljfp-hh54p-4it4h-j4742-5fpv4-yt7aq-thucs-citww-74flb-tdsjp-7ae',
+  identity: {
+    delegations: [ [Object] ],
+    publicKey: '303c300c060a2b0601040183b8430102032c000a00000000015074c201014685ddb9707f2c9b50cf183b049c9180b69007a16be471c0229b32abe3bd5b8c'
+  }
+}
+```
+</ResponseExample>
+
+<Check>
+Excellent! You've successfully completed the full authentication flow and received an API token from Odin.
+</Check>
+
+## Understanding the Response
+
+The authentication response contains three important pieces of information:
+
+<AccordionGroup>
+<Accordion title="JWT Token">
+  The `token` field contains a JSON Web Token (JWT) that you can use to authenticate API requests to Odin services. This token has an expiration time and should be refreshed when needed.
+</Accordion>
+
+<Accordion title="Principal ID">
+  The `principal` field shows your unique Internet Computer principal identifier. This is derived from your Bitcoin wallet and will be consistent across sessions.
+</Accordion>
+
+<Accordion title="Identity Object">
+  The `identity` field contains the delegation chain information that proves your authentication. This identity will be used later on to do Odin canister calls.
+</Accordion>
+</AccordionGroup>
+
+## Using Your API Token
+
+Once you have your JWT token, you can use it to make authenticated requests to Odin's API:
+
+<CodeGroup>
+```javascript Fetch Example
+const response = await fetch('https://api.odin.fun/dev/protected-endpoint', {
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  }
+});
+```
+
+```javascript Axios Example
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'https://api.odin.fun/dev',
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+});
+
+const response = await api.get('/protected-endpoint');
+```
+</CodeGroup>
+
+## Security Considerations
+
+<Warning>
+**Important Authentication Notes:**
+
+- **Token Storage**: Store JWT tokens securely and never expose them in client-side code
+- **Token Expiration**: Monitor token expiration and implement refresh logic
+- **HTTPS Only**: Always use HTTPS for API requests in production
+- **Rate Limiting**: Respect API rate limits and implement appropriate retry logic
+</Warning>
+
+## Troubleshooting API Authentication
+
+<AccordionGroup>
+<Accordion title="401 Unauthorized">
+  - Verify your identity was created successfully in Step 2
+  - Check that the timestamp signing is working correctly
+</Accordion>
+
+<Accordion title="Token Verification Failed">
+  - Confirm your delegation identity is valid and not expired
+  - Check that the payload format matches the expected structure
+  - Verify network connectivity to the Odin API
+</Accordion>
+
+<Accordion title="Invalid Response Format">
+  - Ensure the API response is valid JSON
+  - Check that you're sending the correct Content-Type headers
+  - Verify the API endpoint URL is correct
+</Accordion>
+</AccordionGroup>
+
+## What's Next?
+
+Congratulations! You now have a complete working authentication system. If you need help setting up a Bitcoin wallet for testing, proceed to the final step where we'll show you how to create a sample wallet.
+
+<Card title="Continue to Step 4" icon="arrow-right" href="/quickstart/quickstart-04-canister-calls">
+  Learn how to trade on Odin
+</Card>
+
+## Integration Summary
+
+You've successfully implemented a complete Odin authentication flow that:
+
+1. ✅ Prepares authentication with the SIWB canister
+2. ✅ Signs messages with Bitcoin wallet signatures  
+3. ✅ Creates Internet Computer identities
+4. ✅ Exchanges identities for API tokens
+5. ✅ Enables authenticated access to Odin services
+
+Your application can now leverage Bitcoin's security model for user authentication while seamlessly integrating with Internet Computer services!

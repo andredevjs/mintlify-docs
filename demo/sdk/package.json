@@ -1,0 +1,87 @@
+{
+  "name": "@odin/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for interacting with the Odin API and canister",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "type-check": "tsc --noEmit",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "generate-types": "openapi-typescript assets/openapi.json -o src/types/api.ts"
+  },
+  "keywords": [
+    "odin",
+    "bitcoin",
+    "blockchain",
+    "sdk",
+    "typescript",
+    "dfinity",
+    "internet-computer",
+    "siwb"
+  ],
+  "author": "Odin Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/odin/odin-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/odin/odin-sdk/issues"
+  },
+  "homepage": "https://github.com/odin/odin-sdk#readme",
+  "dependencies": {
+    "@dfinity/agent": "^2.4.1",
+    "@dfinity/candid": "^2.4.1",
+    "@dfinity/identity": "^2.4.1",
+    "@dfinity/principal": "^2.4.1",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "openapi-typescript": "^6.7.0",
+    "prettier": "^3.0.0",
+    "rimraf": "^5.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0",
+    "bip322-js": "^3.0.0",
+    "bip39": "^3.1.0",
+    "varuint-bitcoin": "^1.1.2",
+    "@noble/secp256k1": "^1.7.1",
+    "@scure/bip32": "^1.7.0",
+    "@scure/bip39": "^1.6.0",
+    "@scure/btc-signer": "^1.8.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

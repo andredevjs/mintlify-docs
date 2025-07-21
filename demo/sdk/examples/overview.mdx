@@ -1,0 +1,552 @@
+---
+title: 'Examples Overview'
+description: 'Complete collection of working examples demonstrating all Odin SDK features'
+---
+
+# Examples Overview
+
+Explore our comprehensive collection of working examples that demonstrate every feature of the Odin SDK. Each example includes complete, runnable code with detailed explanations.
+
+<Frame>
+  <img src="/images/examples-hero.png" alt="Odin SDK Examples" />
+</Frame>
+
+## Available Examples
+
+<CardGroup cols={2}>
+<Card title="Authentication Example" icon="key" href="/examples/authentication">
+  Complete SIWB authentication flow with live Bitcoin wallets
+</Card>
+
+<Card title="Token Operations" icon="bitcoin" href="/examples/token-operations">
+  Browse, search, and analyze Bitcoin tokens and market data
+</Card>
+
+<Card title="User Operations" icon="user" href="/examples/user-operations">
+  Manage user profiles, balances, and activity history
+</Card>
+
+<Card title="Trading Example" icon="chart-line" href="/examples/trading">
+  Buy, sell, transfer, and withdraw Bitcoin tokens
+</Card>
+
+<Card title="Wallet Creation" icon="wallet" href="/examples/wallet-creation">
+  Create sample Bitcoin wallets for testing and development
+</Card>
+
+<Card title="Error Handling" icon="exclamation-triangle" href="/examples/error-handling">
+  Robust error handling patterns and recovery strategies
+</Card>
+</CardGroup>
+
+## Getting Started with Examples
+
+### Prerequisites
+
+<Steps>
+<Step title="Clone Repository">
+  ```bash
+  git clone https://github.com/odin/odin-sdk.git
+  cd odin-sdk
+  ```
+</Step>
+
+<Step title="Install Dependencies">```bash npm install ```</Step>
+
+<Step title="Build SDK">```bash npm run build ```</Step>
+
+<Step title="Run Examples">
+  ```bash
+  # Run individual examples
+  npx tsx examples/auth-example.ts
+  npx tsx examples/token-example.ts
+  npx tsx examples/user-example.ts
+  ```
+</Step>
+</Steps>
+
+### Environment Setup
+
+Configure your environment for the examples:
+
+```bash .env
+# Odin API Configuration
+ODIN_API_BASE_URL=https://api.odin.fun/dev
+ODIN_ENABLE_LOGGING=true
+
+# Optional: Custom timeout
+ODIN_TIMEOUT=30000
+```
+
+## Example Categories
+
+### 🔐 Authentication Examples
+
+<Tabs>
+<Tab title="Basic Authentication">
+  **File:** `examples/auth-example.ts`
+  
+  Demonstrates the complete SIWB authentication flow:
+  - Bitcoin wallet creation
+  - Challenge message preparation
+  - BIP322 signature generation
+  - Delegation identity creation
+  - JWT token exchange
+  
+  ```bash
+  npx tsx examples/auth-example.ts
+  ```
+</Tab>
+
+<Tab title="Multi-Wallet Support">
+  **File:** `examples/wallet-integration-example.ts` Shows integration with different Bitcoin
+  wallets: - Unisat Wallet - Xverse Wallet - OKX Wallet - Custom wallet implementation ```bash npx
+  tsx examples/wallet-integration-example.ts ```
+</Tab>
+
+<Tab title="Error Handling">
+  **File:** `examples/auth-error-handling.ts`
+  
+  Comprehensive error handling for authentication:
+  - Network timeout recovery
+  - Invalid signature handling
+  - Wallet connection issues
+  - Retry strategies
+  
+  ```bash
+  npx tsx examples/auth-error-handling.ts
+  ```
+</Tab>
+</Tabs>
+
+### 🪙 Token Examples
+
+<Tabs>
+<Tab title="Token Discovery">
+  **File:** `examples/token-example.ts`
+  
+  Browse and discover Bitcoin tokens:
+  - List all tokens with pagination
+  - Filter by trading status
+  - Search by name and symbol
+  - Sort by market cap, volume, price
+  
+  ```bash
+  npx tsx examples/token-example.ts
+  ```
+</Tab>
+
+<Tab title="Market Analysis">
+  **File:** `examples/market-analysis.ts` Analyze token market data: - Price history and charts -
+  Trading volume analysis - Holder distribution - Social sentiment metrics ```bash npx tsx
+  examples/market-analysis.ts ```
+</Tab>
+
+<Tab title="Token Details">
+  **File:** `examples/token-details.ts`
+  
+  Get comprehensive token information:
+  - Token metadata and description
+  - Trading statistics
+  - Recent transactions
+  - Community comments
+  
+  ```bash
+  npx tsx examples/token-details.ts
+  ```
+</Tab>
+</Tabs>
+
+### 👤 User Examples
+
+<Tabs>
+<Tab title="User Profile">
+  **File:** `examples/user-example.ts`
+  
+  Manage user profiles and information:
+  - Get user details by principal
+  - Update profile information
+  - Upload profile images
+  - Manage username
+  
+  ```bash
+  npx tsx examples/user-example.ts
+  ```
+</Tab>
+
+<Tab title="Portfolio Management">
+  **File:** `examples/portfolio-example.ts` View and manage user portfolios: - Token balances and
+  holdings - Portfolio value calculation - Performance metrics - Asset allocation ```bash npx tsx
+  examples/portfolio-example.ts ```
+</Tab>
+
+<Tab title="Activity Tracking">
+  **File:** `examples/activity-example.ts`
+  
+  Track user activity and history:
+  - Transaction history
+  - Trading activity
+  - Achievement progress
+  - Social interactions
+  
+  ```bash
+  npx tsx examples/activity-example.ts
+  ```
+</Tab>
+</Tabs>
+
+### 💰 Trading Examples
+
+<Tabs>
+<Tab title="Basic Trading">
+  **File:** `examples/buy-example.ts`
+  
+  Fundamental trading operations:
+  - Buy tokens with BTC
+  - Sell tokens for BTC
+  - Calculate trading costs
+  - Handle slippage protection
+  
+  ```bash
+  npx tsx examples/buy-example.ts
+  ```
+</Tab>
+
+<Tab title="Advanced Trading">
+  **File:** `examples/advanced-trading.ts` Advanced trading strategies: - Limit orders - Stop-loss
+  orders - Portfolio rebalancing - Arbitrage opportunities ```bash npx tsx
+  examples/advanced-trading.ts ```
+</Tab>
+
+<Tab title="Transfer & Withdraw">
+  **File:** `examples/transfer-example.ts`
+  
+  Asset transfer and withdrawal:
+  - Transfer tokens between users
+  - Withdraw BTC to external addresses
+  - Batch operations
+  - Fee optimization
+  
+  ```bash
+  npx tsx examples/transfer-example.ts
+  ```
+</Tab>
+</Tabs>
+
+## Running Examples
+
+### Individual Examples
+
+Run specific examples based on what you want to learn:
+
+<CodeGroup>
+```bash Authentication
+# Complete SIWB authentication flow
+npx tsx examples/auth-example.ts
+
+# Multi-wallet authentication
+
+npx tsx examples/wallet-integration-example.ts
+
+````
+
+```bash Token Operations
+# Token discovery and search
+npx tsx examples/token-example.ts
+
+# Market data analysis
+npx tsx examples/market-analysis.ts
+````
+
+```bash User Management
+# User profile operations
+npx tsx examples/user-example.ts
+
+# Portfolio management
+npx tsx examples/portfolio-example.ts
+```
+
+```bash Trading
+# Basic buy/sell operations
+npx tsx examples/buy-example.ts
+
+# Transfer and withdrawal
+npx tsx examples/transfer-example.ts
+```
+
+</CodeGroup>
+
+### All Examples
+
+Run all examples in sequence:
+
+```bash
+npm run examples:all
+```
+
+This script runs all examples and generates a comprehensive report showing the SDK's capabilities.
+
+## Example Output
+
+Each example provides detailed logging and results:
+
+<Tabs>
+<Tab title="Authentication Example">
+  ```
+  🚀 Odin SDK Authentication Example
+  
+  --- 📱 Step 1: Create Sample Wallet ---
+  🔑 Wallet created successfully!
+  📍 Address: bc1p8x7...
+  🔐 Public Key: 020x8f...
+  
+  --- 📋 Step 2: Prepare Authentication ---
+  ✅ Authentication prepared successfully!
+  📄 Message to sign: Odin authentication...
+  
+  --- ✏️ Step 3: Sign Message ---
+  ✅ Message signed successfully!
+  📝 Signature: AkcwRAI...
+  
+  --- 🔐 Step 4: Complete Authentication ---
+  🎉 Authentication completed successfully!
+  👤 Principal ID: bkyz2-fmaaa-aaaah-qaaaq-cai
+  🎫 JWT Token: eyJhbGciOiJ...
+  ⏰ Expires in: 3600 seconds
+  
+  🎉 Authentication example completed successfully!
+  ```
+</Tab>
+
+<Tab title="Token Example">
+  ``` 🪙 Odin SDK Token Operations Example --- 📊 Step 1: Get Tradable Tokens --- ✅ Found 15
+  tradable tokens Top tokens: 1. ORDI - $45.23 (↑ 5.2%) 2. SATS - $0.0001 (↓ 2.1%) 3. RATS - $0.12
+  (↑ 15.8%) --- 🔍 Step 2: Search Tokens --- ✅ Search results for "PEPE": 3 tokens found --- 📈
+  Step 3: Get Market Data --- ✅ Market data retrieved: - 24h Volume: 125.5 BTC - Market Cap: $2.1M
+  - Active Traders: 1,247 🎉 Token operations completed successfully! ```
+</Tab>
+
+<Tab title="Trading Example">
+  ```
+  💰 Odin SDK Trading Example
+  
+  --- 🔐 Step 1: Authenticate ---
+  ✅ Authentication successful
+  👤 Principal: bkyz2-fmaaa-aaaah-qaaaq-cai
+  
+  --- 💳 Step 2: Check Balance ---
+  ✅ Current BTC balance: 0.001 BTC
+  
+  --- 🛒 Step 3: Buy Token ---
+  ✅ Purchase successful!
+  📦 Token ID: token_xyz
+  💰 Amount: 1000 tokens
+  💸 Cost: 0.0001 BTC
+  📋 Transaction ID: 0x7f8e...
+  
+  --- 📊 Step 4: Verify Purchase ---
+  ✅ Token balance updated: 1000 tokens
+  💰 Remaining BTC: 0.0009 BTC
+  
+  🎉 Trading example completed successfully!
+  ```
+</Tab>
+</Tabs>
+
+## Integration Examples
+
+### React Integration
+
+Example React component using the SDK:
+
+```typescript react-example.tsx
+import React, { useState } from 'react';
+import { OdinSDK } from '@odin/sdk';
+
+export function OdinAuthButton() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<string | null>(null);
+
+  const odin = new OdinSDK({
+    baseUrl: 'https://api.odin.fun/dev',
+  });
+
+  const handleAuthentication = async () => {
+    try {
+      // Get address from wallet
+      const address = await window.unisat.getAddress();
+
+      // Prepare authentication
+      const prepareResult = await odin.auth.prepare(address);
+
+      // Sign message
+      const signature = await window.unisat.signMessage(prepareResult.message);
+      const publicKey = await window.unisat.getPublicKey();
+
+      // Complete authentication
+      const authResult = await odin.auth.login({
+        address,
+        message: prepareResult.message,
+        signature,
+        publicKey,
+        signatureType: 'Bip322Simple',
+      });
+
+      setIsAuthenticated(true);
+      setUser(authResult.principalId);
+    } catch (error) {
+      console.error('Authentication failed:', error);
+    }
+  };
+
+  return (
+    <div>
+      {!isAuthenticated ? (
+        <button onClick={handleAuthentication}>
+          Sign In with Bitcoin
+        </button>
+      ) : (
+        <div>
+          <p>Welcome! Principal: {user}</p>
+          <button onClick={() => odin.auth.signOut()}>
+            Sign Out
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+### Next.js Integration
+
+Example Next.js API route:
+
+```typescript api-route.ts
+// pages/api/odin-data.ts
+import { NextApiRequest, NextApiResponse } from 'next';
+import { OdinSDK } from '@odin/sdk';
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const odin = new OdinSDK({
+    baseUrl: process.env.ODIN_API_BASE_URL || 'https://api.odin.fun/v1',
+  });
+
+  try {
+    switch (req.method) {
+      case 'GET':
+        const tokens = await odin.tokens.getTokens({
+          trading: true,
+          limit: 10,
+        });
+        res.status(200).json(tokens);
+        break;
+
+      default:
+        res.setHeader('Allow', ['GET']);
+        res.status(405).end(`Method ${req.method} Not Allowed`);
+    }
+  } catch (error) {
+    console.error('API error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+```
+
+## Development Tips
+
+### Debugging Examples
+
+Enable comprehensive logging for debugging:
+
+```typescript debug-config.ts
+const odin = new OdinSDK({
+  baseUrl: 'https://api.odin.fun/dev',
+  enableLogging: true, // Enable SDK logging
+  timeout: 60000, // Increase timeout for debugging
+});
+
+// Enable browser console logging
+console.log = (...args) => {
+  console.info(`[${new Date().toISOString()}]`, ...args);
+};
+```
+
+### Custom Examples
+
+Create your own examples by copying the existing structure:
+
+```typescript custom-example.ts
+import { OdinSDK } from '../src/index';
+
+async function customExample() {
+  console.log('🚀 Custom Odin SDK Example\n');
+
+  const odin = new OdinSDK({
+    baseUrl: 'https://api.odin.fun/dev',
+    enableLogging: true,
+  });
+
+  try {
+    // Your custom logic here
+
+    console.log('🎉 Custom example completed successfully!');
+  } catch (error) {
+    console.error('❌ Custom example failed:', error);
+    process.exit(1);
+  }
+}
+
+// Run the example
+if (require.main === module) {
+  customExample().catch(console.error);
+}
+```
+
+## Safety Guidelines
+
+<Warning>
+  When running trading examples, be aware that: - **Real funds are used** in canister operations -
+  **Transactions are irreversible** once confirmed - **Start with small amounts** for testing -
+  **Monitor network fees** and slippage
+</Warning>
+
+### Safe Testing Practices
+
+<CardGroup cols={2}>
+<Card title="Use Development Environment" icon="flask">
+  Always test with the development API first: `https://api.odin.fun/dev`
+</Card>
+
+<Card title="Small Amounts" icon="coins">
+  Start with minimal amounts (1000 satoshis) for testing
+</Card>
+
+<Card title="Test Addresses" icon="shield-check">
+  Use test Bitcoin addresses when possible
+</Card>
+
+<Card title="Monitor Carefully" icon="eye">
+  Watch balances and transactions closely during testing
+</Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+<Card title="Authentication Example" icon="key" href="/examples/authentication">
+  Start with the complete authentication example
+</Card>
+
+<Card title="API Reference" icon="book" href="/api-reference/introduction">
+  Explore the complete API documentation
+</Card>
+
+<Card title="Integration Guides" icon="puzzle-piece" href="/guides/getting-started">
+  Learn how to integrate the SDK into your application
+</Card>
+
+<Card title="Production Checklist" icon="clipboard-check" href="/guides/production-checklist">
+  Prepare your implementation for production deployment
+</Card>
+</CardGroup>

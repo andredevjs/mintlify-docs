@@ -1,0 +1,249 @@
+---
+title: 'Step 2: Complete SIWB Authentication'
+description: 'Sign the message with your Bitcoin wallet and complete the authentication process'
+---
+
+In this step, you'll learn how to complete the SIWB authentication process by signing the message you received in Step 1 and converting it into an Internet Computer identity.
+
+<Info>
+This step builds on [Step 1: Project Setup and Prepare Authentication](/quickstart/quickstart-01-prepare). Make sure you've completed that step first.
+</Info>
+
+## What You'll Accomplish
+
+By the end of this step, you'll have:
+- ✅ Created utility functions for delegation chain management
+- ✅ Implemented the complete SIWB login process
+- ✅ Generated a working Internet Computer identity
+- ✅ Tested the SIWB authentication flow Step 4
+
+## Phase 2: Complete SIWB Login
+
+Now that you have a message to sign from Step 1, let's complete the authentication process by signing that message with your Bitcoin wallet and converting it into an Internet Computer identity.
+
+### Authentication Utilities
+
+First, let's create utility functions that we'll need for managing delegation chains:
+
+```typescript utils/auth.ts
+import { PublicKey } from '../canister/service.interface';
+import { Delegation, DelegationChain } from '@dfinity/identity';
+
+const asSignature = (signature: any): any => {
+    const arrayBuffer = signature.buffer;
+    const s = arrayBuffer;
+    s.__signature__ = void 0;
+    return s;
+};
+  
+const asDerEncodedPublicKey = (publicKey: any) => {
+    const arrayBuffer = publicKey.buffer;
+    const pk = arrayBuffer;
+    pk.__derEncodedPublicKey__ = void 0;
+    return pk;
+};
+
+export const createDelegationChain = (signedDelegation: any, publicKey: PublicKey) => { 
+    const delegations = [
+        {
+        delegation: new Delegation(
+            signedDelegation.delegation.pubkey.buffer,
+            signedDelegation.delegation.expiration,
+            signedDelegation.delegation.targets[0]
+        ),
+        signature: asSignature(signedDelegation.signature),
+        },
+    ];
+    return DelegationChain.fromDelegations(delegations, asDerEncodedPublicKey(publicKey));
+};
+```
+
+<Note>
+These utility functions handle the conversion between the SIWB canister's response format and the Internet Computer's delegation identity format.
+</Note>
+
+### Implementing the Login Function
+
+Now let's implement the main login function that completes the SIWB authentication process:
+
+```typescript core/login.ts
+import { Actor, HttpAgent } from "@dfinity/agent";
+import { DEFAULT_IC_HOST, SIWB_CANISTER_ID } from "../constants/canister";
+import { idlFactory as SIWBIdlFactory } from '../canister/ic_siwb_provider.idl';
+import { SIWBActor, SIWBGetDelegationResponse, SIWBLoginResponse, SIWBSignMessageType } from "../types/siwb";
+import { SignatureType } from '../types/siwb';
+import { Ed25519KeyIdentity, DelegationIdentity } from '@dfinity/identity';
+import { createDelegationChain } from '../utils/auth';
+
+/**
+ * Parameters for completing the login process
+ */
+export interface LoginParams {
+  /** Bitcoin address */
+  address: string;
+
+  /** Original message that was signed */
+  message: string;
+
+  /** Signed message from wallet */
+  signature: string;
+
+  /** Bitcoin public key */
+  publicKey: string;
+
+  /** Type of signature used */
+  signatureType: SignatureType;
+
+  /** Optional referrer code */
+  referrer?: string;
+}
+  
+/**
+   * Phase 2: Complete authentication with signed message
+   */
+export const login = async (params: LoginParams): Promise<DelegationIdentity> => {
+    // Step 1: Create anonymous agent and SIWB actor
+    const agent = new HttpAgent({ host: DEFAULT_IC_HOST });
+    const siwbActor = Actor.createActor(SIWBIdlFactory, {
+      agent,
+      canisterId: SIWB_CANISTER_ID,
+    }) as SIWBActor;
+
+    // Step 2: Generate session identity
+    const sessionIdentity = Ed25519KeyIdentity.generate();
+    const sessionPublicKey = sessionIdentity.getPublicKey().toDer();
+
+
+    // Step 3: Call siwb_login
+    const signMessageType: SIWBSignMessageType = { Bip322Simple: null };
+
+    const loginResponse: SIWBLoginResponse = await siwbActor.siwb_login(
+      params.signature, // Keep as string (base64)
+      params.address, // Keep as string
+      params.publicKey, // Keep as string (hex)
+      new Uint8Array(sessionPublicKey),
+      signMessageType
+    );
+
+    if ('Err' in loginResponse) {
+      throw new Error(`SIWB login failed: ${loginResponse.Err}`);
+    }
+
+
+    const delegationResponse: SIWBGetDelegationResponse = await siwbActor.siwb_get_delegation(
+      params.address,
+      new Uint8Array(sessionPublicKey),
+      loginResponse.Ok.expiration
+    );
+
+    if ('Err' in delegationResponse) {
+      throw new Error(`SIWB get delegation failed: ${delegationResponse.Err}`);
+    }
+
+    //  Create delegation chain
+    const delegationChain = createDelegationChain(
+      delegationResponse.Ok,
+      loginResponse.Ok.user_canister_pubkey
+    );
+
+    // Step 5: Create delegation identity
+    const identity = DelegationIdentity.fromDelegation(sessionIdentity, delegationChain);
+
+    return identity
+}
+```
+
+## Understanding the Login Process
+
+The login function performs several important steps:
+
+<Steps>
+<Step title="Create SIWB Actor">
+  Establishes a connection to the SIWB canister using an anonymous agent
+</Step>
+
+<Step title="Generate Session Identity">
+  Creates a temporary identity for this authentication session
+</Step>
+
+<Step title="Submit Login Credentials">
+  Sends the signed message, address, and public key to the SIWB canister
+</Step>
+
+<Step title="Retrieve Delegation">
+  Gets a delegation that proves the authentication was successful
+</Step>
+
+<Step title="Create Identity">
+  Combines the session identity with the delegation to create a usable Internet Computer identity
+</Step>
+</Steps>
+
+<Warning>
+At this point, you can start using the identity to interact with Odin canisters and other Internet Computer services.
+</Warning>
+
+## Testing the Complete Flow
+
+Let's test our complete authentication flow by combining the prepare and login functions:
+
+```typescript index.ts
+import { login, prepare } from "./core/prepare";
+import { createSampleWallet } from "./sample-wallet";
+
+(async () => {
+
+    const wallet = await createSampleWallet();
+    const result = await prepare(wallet.address);
+    
+    const signature = await wallet.signMessage(result.message);
+
+    const loginResult = await login({
+        address: wallet.address,
+        message: result.message,
+        signature: signature,
+        publicKey: wallet.publicKey,
+        signatureType: 'Bip322Simple',
+    });
+
+    console.log(loginResult.getPrincipal().toString());
+})();
+```
+
+<ResponseExample>
+```js Expected Output
+sldvg-tvzjh-6mm76-6szcs-tprn5-a3lxs-kxg4z-mvvxz-alwum-jsequ-pqe
+```
+</ResponseExample>
+
+<Check>
+Success! You now have a working Internet Computer identity generated through Bitcoin wallet authentication.
+</Check>
+
+## Bitcoin Wallet Integration
+
+<Tip>
+If you don't know how to create and sign messages with Bitcoin, don't worry! We've created a comprehensive guide in [ Sample Wallet Setup](/examples/sample-wallet) that shows you how to implement a complete Bitcoin wallet for testing.
+</Tip>
+
+## Troubleshooting Common Issues
+
+<AccordionGroup>
+<Accordion title="Cannot recover address">
+  - Ensure you are signing with Bip322 strict
+  - Verify that the message being signed matches exactly the one returned from `prepare()`
+  - Make sure that you are matching the signature method (Bip322 vs ECDSA)
+</Accordion>
+
+<Accordion title="Delegation Expiration">
+  - If authentication fails due to expiration, restart from Step 1 with a fresh `prepare()` call
+</Accordion>
+</AccordionGroup>
+
+## What's Next?
+
+Now that you have a working Internet Computer identity, you can use it to authenticate with Odin's API services. In the next step, you'll learn how to exchange your identity for an API token.
+
+<Card title="Continue to Step 3" icon="arrow-right" href="/quickstart/quickstart-03-login-odin">
+  Learn how to authenticate with Odin's API using your Internet Computer identity
+</Card>
