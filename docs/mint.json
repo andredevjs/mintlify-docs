@@ -43,7 +43,67 @@
         "quickstart/quickstart-04-canister-calls"
       ]
     },
-    
+    {
+      "group": "API Reference",
+      "pages": [
+        "api/overview",
+        {
+          "group": "Authentication",
+          "pages": [
+            "api/authentication"
+          ]
+        },
+        {
+          "group": "Tokens",
+          "pages": [
+            "api/tokens/overview",
+            "api/tokens/discovery",
+            "api/tokens/details",
+            "api/tokens/comments",
+            "api/tokens/feeds",
+            "api/tokens/social"
+          ]
+        },
+        {
+          "group": "Trading",
+          "pages": [
+            "api/trading/overview",
+            "api/trading/trades"
+          ]
+        },
+        {
+          "group": "Users",
+          "pages": [
+            "api/users/overview",
+            "api/users/profiles",
+            "api/users/balances",
+            "api/users/activity",
+            "api/users/achievements",
+            "api/users/referrals"
+          ]
+        },
+
+        {
+          "group": "Utilities",
+          "pages": [
+            "api/utilities/search",
+            "api/utilities/currency",
+            "api/utilities/settings",
+            "api/utilities/tags"
+          ]
+        },
+        {
+          "group": "Data Models",
+          "pages": [
+            "api/models/token",
+            "api/models/user",
+            "api/models/trade",
+            "api/models/comment",
+            "api/models/activity"
+          ]
+        }
+      ]
+    },
     {
       "group": "Examples",
       "pages": [
